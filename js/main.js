@@ -1,9 +1,27 @@
 var tasks_results = [];
-
-
-var tasks_results = [];
-
-
+var colors = [
+  {
+    fill: "#009900",
+    stroke : "#005500"
+  },
+  {
+    fill: "#990000",
+    stroke : "#550000"
+  },
+  {
+    fill: "#000099",
+    stroke : "#000044"
+  }
+  ,
+  {
+    fill: "#007777",
+    stroke : "#003333"
+  },
+  {
+    fill: "#777700",
+    stroke : "#333300"
+  }
+];
 
 var CanvasDrawr = function(options) {
   var canvas = document.getElementById(options.id),
@@ -18,6 +36,7 @@ var CanvasDrawr = function(options) {
   var lines = [, , ];
   var offset = $(canvas).offset();
   var pressed = false;
+  var taskIndex = 0;
   var self = {
       init: function() {
         canvas.addEventListener('touchstart', self.preDraw, false);
@@ -26,6 +45,7 @@ var CanvasDrawr = function(options) {
         canvas.addEventListener('mouseup', function(){pressed = false;}, false);
         canvas.addEventListener('mouseout', function(){pressed = false;}, false);
         canvas.addEventListener('mousemove', self.draw, false);
+        self.updateTask();
       },
       preDraw: function(event) {
         if (typeof(event.touches) == "undefined"){
@@ -87,6 +107,39 @@ var CanvasDrawr = function(options) {
               x: lines[i].x + changeX,
               y: lines[i].y + changeY
           };
+      },
+      updateTask: function(){
+
+        var task = tasks[taskIndex];
+
+        if(task.trajectories.length > colors.length){
+          alert("Currently the maximum number of colors specified is " + colors.length + ".");
+          return;
+        }
+        for (var i=0; i< task.trajectories.length; i++){
+          /// starting point
+          ctxt.beginPath();
+          ctxt.arc(task.trajectories[i].startingPoint.x,task.trajectories[i].startingPoint.y,task.trajectories[i].radius,0,2*Math.PI);
+          ctxt.fillStyle = colors[i].fill;
+          ctxt.fill();
+          ctxt.lineWidth = 5;
+          ctxt.strokeStyle = colors[i].stroke;
+          ctxt.stroke();
+          ctxt.beginPath();
+          ctxt.arc(task.trajectories[i].startingPoint.x,task.trajectories[i].startingPoint.y,task.trajectories[i].radius* 0.5,0,2*Math.PI);
+          ctxt.fillStyle = "white";
+          ctxt.fill();
+          ctxt.stroke();
+
+          ctxt.beginPath();
+          ctxt.arc(task.trajectories[i].endingPoint.x,task.trajectories[i].endingPoint.y,task.trajectories[i].radius,0,2*Math.PI);
+          ctxt.fillStyle = colors[i].fill;
+          ctxt.fill();
+          ctxt.lineWidth = 5;
+          ctxt.strokeStyle = colors[i].stroke;
+          ctxt.stroke();
+        }
+
       }
   };
   return self.init();
