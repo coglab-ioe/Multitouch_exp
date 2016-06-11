@@ -22,6 +22,7 @@ var colors = [
     stroke : "#333300"
   }
 ];
+var EndPointRadius = 20;
 
 var CanvasDrawr = function(options) {
   var canvas = document.getElementById(options.id),
@@ -36,67 +37,131 @@ var CanvasDrawr = function(options) {
   var lines = [, , ];
   var offset = $(canvas).offset();
   var pressed = false;
+  var numTaskLeft = 0, taskStarted = false;
   var taskIndex = 0;
+  var clickid = 0;
   var self = {
       init: function() {
-        canvas.addEventListener('touchstart', self.preDraw, false);
-        canvas.addEventListener('touchmove', self.draw, false);
-        canvas.addEventListener('mousedown', self.preDraw, false);
-        canvas.addEventListener('mouseup', function(){pressed = false;}, false);
-        canvas.addEventListener('mouseout', function(){pressed = false;}, false);
-        canvas.addEventListener('mousemove', self.draw, false);
-        self.updateTask();
+        canvas.addEventListener('touchstart', self.preTouch, false);
+        canvas.addEventListener('touchmove', self.touch, false);
+        canvas.addEventListener('touchend', self.postTouch, false);
+        canvas.addEventListener('touchcancel', self.postTouch, false);
+        canvas.addEventListener('mousedown', self.preTouch, false);
+        canvas.addEventListener('mousemove', self.touch, false);
+        canvas.addEventListener('mouseup', self.postTouch, false);
+        canvas.addEventListener('mouseout', self.postTouch, false);
+    //    self.updateTask();
+        return self;
       },
-      preDraw: function(event) {
+      preTouch: function(event) {
+        var now = new Date().getTime();
+        if ( numTaskLeft == 0){
+          numTaskLeft = tasks[taskIndex].trajectories.length;
+          taskStarted = true;
+        }
         if (typeof(event.touches) == "undefined"){
           pressed = true;
           console.log("pressed:"+ pressed);
 
-          var id = 0,
-              colors = ["red", "green", "yellow", "blue", "magenta", "orangered"],
-              mycolor = colors[Math.floor(Math.random() * colors.length)];
-          lines[id] = {
-              x: event.pageX - offset.left,
-              y: event.pageY - offset.top,
+          var colors = ["red", "green", "yellow", "blue", "magenta", "orangered"],
+              mycolor = colors[Math.floor(Math.random() * colors.length)],
+              moveX = event.pageX - offset.left ,
+              moveY = event.pageY - offset.top ;
+
+          lines[clickid] = {
+              x: moveX,
+              y: moveY,
               color: mycolor
           };
+          tasks[taskIndex].touchstart(now, moveX, moveY, clickid);
+          self.drawEndPoint(moveX, moveY, "black");
         }else {
           $.each(event.touches, function(i, touch) {
               var id = touch.identifier,
                   colors = ["red", "green", "yellow", "blue", "magenta", "orangered"],
-                  mycolor = colors[Math.floor(Math.random() * colors.length)];
+                  mycolor = colors[Math.floor(Math.random() * colors.length)],
+                  moveX = event.pageX - offset.left ,
+                  moveY = event.pageY - offset.top ;
+
               lines[id] = {
-                  x: this.pageX - offset.left,
-                  y: this.pageY - offset.top,
+                  x: moveX,
+                  y: moveY,
                   color: mycolor
               };
+              tasks[taskIndex].touchstart(now, moveX, moveY, id);
+              self.drawEndPoint(moveX, moveY, "black");
+
           });
         }
-          event.preventDefault();
+        event.preventDefault();
       },
-      draw: function(event) {
-          var e = event,
+      postTouch: function(event) {
+        if(!taskStarted)
+          return;
+        var now = new Date().getTime();
+
+        numTaskLeft--;
+        pressed = false;
+        if (typeof(event.touches) == "undefined"){
+          if(DEBUG)console.log("pressed:"+ false);
+          var moveX = event.pageX - offset.left ,
+          moveY = event.pageY - offset.top ;
+          tasks[taskIndex].touchend(now, moveX, moveY, clickid);
+          self.drawEndPoint(moveX, moveY, "blue");
+          clickid++;
+
+        }else {
+          $.each(event.touches, function(i, touch) {
+              var id = touch.identifier,
+              moveX = event.pageX - offset.left ,
+              moveY = event.pageY - offset.top ;
+              tasks[taskIndex].touchend(now, moveX, moveY, id);
+
+              self.drawEndPoint(moveX, moveY, "blue");
+          });
+        }
+        if(numTaskLeft==0){
+          // the task is ended ;
+          tasks[taskIndex].taskend(now);
+
+          taskStarted = false;
+          $(".layer-wrapper").show();
+          $("#final-trace-outcome").val($("#final-trace-outcome").val()+ tasks[taskIndex].reportTraces());
+          $("#final-task-outcome").val($("#final-task-outcome").val()+ tasks[taskIndex].reportTrajectories());
+          clickid = 0;
+        }
+        else if(numTaskLeft < 0){
+          if(DEBUG) alert("numTaskLeft < 0: deal with the boundary cases. ")
+        }
+        event.preventDefault();
+      },
+      touch: function(event) {
+          var now = new Date().getTime(),
+              e = event,
               hmm = {};
           if (typeof(event.touches) == "undefined" && pressed){
-            var id =0,
-                moveX = event.pageX - offset.left - lines[id].x,
-                moveY = event.pageY - offset.top - lines[id].y;
-            var ret = self.move(0, moveX, moveY);
-            lines[0].x = ret.x;
-            lines[0].y = ret.y;
+            // this if block part is for mouse event
+            var moveX = event.pageX - offset.left - lines[clickid].x,
+                moveY = event.pageY - offset.top - lines[clickid].y;
+            var ret = self.draw(clickid, moveX, moveY);
+            lines[clickid].x = ret.x;
+            lines[clickid].y = ret.y;
+            tasks[taskIndex].touchmove(now, event.pageX - offset.left, event.pageY - offset.top, clickid);
           }else {
+            // this blocks is for touch events.
             $.each(event.touches, function(i, touch) {
                 var id = touch.identifier,
                     moveX = this.pageX - offset.left - lines[id].x,
                     moveY = this.pageY - offset.top - lines[id].y;
-                var ret = self.move(id, moveX, moveY);
+                var ret = self.draw(id, moveX, moveY);
                 lines[id].x = ret.x;
                 lines[id].y = ret.y;
+                tasks[taskIndex].touchmove(now, this.pageX - offset.left, this.pageY - offset.top, id);
             });
           }
           event.preventDefault();
       },
-      move: function(i, changeX, changeY) {
+      draw: function(i, changeX, changeY) {
           ctxt.strokeStyle = lines[i].color;
           ctxt.beginPath();
           ctxt.moveTo(lines[i].x, lines[i].y);
@@ -108,7 +173,15 @@ var CanvasDrawr = function(options) {
               y: lines[i].y + changeY
           };
       },
+      drawEndPoint:function(x,y,color){
+        ctxt.beginPath();
+        ctxt.arc(x,y,EndPointRadius,0,2*Math.PI);
+        ctxt.lineWidth = 5;
+        ctxt.strokeStyle = color;
+        ctxt.stroke();
+      },
       updateTask: function(){
+        ctxt.clearRect(0, 0, canvas.width, canvas.height);
 
         var task = tasks[taskIndex];
 
@@ -139,7 +212,7 @@ var CanvasDrawr = function(options) {
           ctxt.strokeStyle = colors[i].stroke;
           ctxt.stroke();
         }
-
+        task.taskstart();
       }
   };
   return self.init();
@@ -163,12 +236,13 @@ $(function() {
            */
   }
   resizeCanvas();
-  var super_awesome_multitouch_drawing_canvas_thingy = new CanvasDrawr({
+  var myCanvas = new CanvasDrawr({
         id: "multitouch_task",
         size: 10
     });
 
-  function drawStuff() {
-          // do your drawing stuff here
-  }
+  $("#next-task").click(function(){
+    $(".layer-wrapper").hide();
+    myCanvas.updateTask();
+  });
 });

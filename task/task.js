@@ -12,6 +12,12 @@ Point.prototype={
   },
   distXY: function(x,y){
     return Math.pow(Math.pow(this.x-x,2) + Math.pow(this.y-y,2), 0.5);
+  },
+  withinP: function(point, dist){
+    return this.distP(point) <= dist;
+  },
+  withinXY: function(x,y, dist){
+    return this.distXY(x,y) <= dist;
   }
 }
 
@@ -44,49 +50,64 @@ var Task = function(name, trajectories){
 };
 
 Task.prototype = {
-  data : {},
+  traceData : {},
+  taskData : [],
   touch_id : [],
   taskstart:function(){
     if(DEBUG) console.log("Task (" + this.name + ") started.")
     this.startTime = new Date().getTime();
+    this.taskData.push({time: this.startTime, type: "task-start"});
   },
-  touchstart:function(){
+  touchstart:function(_time, _x, _y, _touch_id){
     if(DEBUG) console.log("Task (" + this.name + ") started.");
-    this.log(this.startTime)
-
+    this.traceData[_touch_id] = [];
+    this.touch_id.push(_touch_id)
+    this.log(_time, _x, _y, "touch-start",_touch_id);
   },
-  touchend: function(){
+  touchend: function(_time, _x, _y, _touch_id){
     if(DEBUG) console.log("Task (" + this.name + ") ended.")
+    this.log(_time, _x, _y, "touch-end",_touch_id);
+  },
+  taskend: function(_time){
+    if(DEBUG) console.log("Task (" + this.name + ") ended.")
+    this.endTime = new Date().getTime();
+    this.taskData.push({time: _time, type: "task-end"});
+  },
+  touchmove: function(_time, _x, _y, _touch_id){
+    //if(DEBUG) console.log("Task (" + this.name + ") ended.")
+    this.log(_time, _x, _y, "touch-move",_touch_id);
   },
   log: function(_time, _x, _y, _type,_touch_id){
-    if(this.touch_id.length===0){
-      this.data[_touch_id] = [];
-      this.touch_id.push(_touch_id)
-    }
-    data[_touch_id].push({time:_time - this.startTime, x:_x, y:_y, type:_type});
+
+    if(DEBUG)console.log(_time+", "+_x+", "+_y+", "+_type+", "+_touch_id);
+    this.traceData[_touch_id].push({time:_time - this.startTime, x:_x, y:_y, type:_type});
   },
   reportTraces: function(){
     var string = "";
     for (var i=0; i< this.touch_id.length; i++){
-      for (var j=0; j< data[this.touch_id[i]].length; j++){
+      for (var j=0; j< this.traceData[this.touch_id[i]].length; j++){
         string += this.name + ",";
-        string += this.data[touch_id[i]][j].time + ",";
-        string += this.data[touch_id[i]][j].x + ",";
-        string += this.data[touch_id[i]][j].y + ",";
-        string += this.data[touch_id[i]][j].type + "\n";
+        string += this.touch_id[i] + ",";
+        string += this.traceData[this.touch_id[i]][j].time + ",";
+        string += this.traceData[this.touch_id[i]][j].x + ",";
+        string += this.traceData[this.touch_id[i]][j].y + ",";
+        string += this.traceData[this.touch_id[i]][j].type + "\n";
       }
     }
     return string;
   },
   reportTrajectories: function(){
     var string = "";
+    string += this.name + ",";
+    string += "task-start" + ",0"+ ",,,,,,\n"
+
     for (var i=0; i< this.touch_id.length; i++){
       var minDist = Infinity;
       var selectedTrajectoryIndex = -1;
-      var lastIndex =this.data[this.touch_id[i]].length-1
+      var lastIndex =this.traceData[this.touch_id[i]].length-1
       for (var j=0; j< this.trajectories.length; j++){
-        var distance = this.trajectories[j].startingPoint.distXY(this.data[this.touch_id[i]][0].x, this.data[this.touch_id[i]][0].y);
-        distance += this.trajectories[j].endingPoint.distXY(this.data[this.touch_id[i]][lastIndex].x,   this.data[this.touch_id[i]][lastIndex].y);
+        var distance = this.trajectories[j].startingPoint.distXY(this.traceData[this.touch_id[i]][0].x, this.traceData[this.touch_id[i]][0].y);
+        distance += this.trajectories[j].endingPoint.distXY(this.traceData[this.touch_id[i]][lastIndex].x,   this.traceData[this.touch_id[i]][lastIndex].y);
         if(minDist >distance ){
           selectedTrajectoryIndex = j;
           minDist = distance;
@@ -98,33 +119,33 @@ Task.prototype = {
         if(DEBUG) alert("error");
         return;
       }
-      var dist = this.trajectories[selectedTrajectoryIndex].startingPoint.distXY(this.data[this.touch_id[i]][0].x, this.data[this.touch_id[i]][0].y);
+      var dist = this.trajectories[selectedTrajectoryIndex].startingPoint.distXY(this.traceData[this.touch_id[i]][0].x, this.traceData[this.touch_id[i]][0].y);
 // task starint point
-      string += this.name + ",";
-      string += "task start" + ",";
-      string += this.data[this.touch_id[i]][0].time + ",,,,,,\n";
       // touch starting point
       string += this.name + ",";
-      string += "touch start" + ",";
-      string += this.data[this.touch_id[i]][0].time + ",";
-      string += this.data[this.touch_id[i]][0].x + ",";
-      string += this.data[this.touch_id[i]][0].y + ",";
+      string += "touch-start" + ",";
+      string += this.traceData[this.touch_id[i]][0].time + ",";
+      string += this.traceData[this.touch_id[i]][0].x + ",";
+      string += this.traceData[this.touch_id[i]][0].y + ",";
       string += this.trajectories[selectedTrajectoryIndex].startingPoint.x + ",";
       string += this.trajectories[selectedTrajectoryIndex].startingPoint.y + ",";
       string += dist + ",";
       string += (dist < this.trajectories[selectedTrajectoryIndex].radius) + "\n";
       // touch ending point
-      dist = this.trajectories[selectedTrajectoryIndex].endingPoint.distXY(this.data[this.touch_id[i]][lastIndex].x, this.data[this.touch_id[i]][lastIndex].y);
+      dist = this.trajectories[selectedTrajectoryIndex].endingPoint.distXY(this.traceData[this.touch_id[i]][lastIndex].x, this.traceData[this.touch_id[i]][lastIndex].y);
       string += this.name + ",";
-      string += "touch end" + ",";
-      string += this.data[this.touch_id[i]][lastIndex].time + ",";
-      string += this.data[this.touch_id[i]][lastIndex].x + ",";
-      string += this.data[this.touch_id[i]][lastIndex].y + ",";
+      string += "touch-end" + ",";
+      string += this.traceData[this.touch_id[i]][lastIndex].time + ",";
+      string += this.traceData[this.touch_id[i]][lastIndex].x + ",";
+      string += this.traceData[this.touch_id[i]][lastIndex].y + ",";
       string += this.trajectories[selectedTrajectoryIndex].endingPoint.x + ",";
       string += this.trajectories[selectedTrajectoryIndex].endingPoint.y + ",";
       string += dist + ",";
       string += (dist < this.trajectories[selectedTrajectoryIndex].radius) + "\n";
     }
+    string += this.name + ",";
+    string += "task-end" + ",";
+    string += this.taskData[1].time - this.taskData[0].time + ",,,,,,\n";
     return string;
   }
 }

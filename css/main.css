@@ -1,9 +1,36 @@
 body{
+  font-family: sans-serif;
 }
 canvas{
   border:1px solid;
 }
 
+textarea {  /* position is inherited */
+    width: 45%;
+    height : 500px;
+    padding: 2px;
+    resize : none;
+	  border: solid;
+    border-color:#777777    ;
+
+}
+
 .main_canvas{
   text-align: center;
+}
+
+.layer-wrapper{
+  display:table;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  text-align: center;
+  color:white;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.layer {
+    display: table-cell;
+    vertical-align: middle;
 }
