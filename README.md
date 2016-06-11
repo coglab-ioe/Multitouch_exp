@@ -6,4 +6,6 @@
 
 - Checking in 6/2/2016 10:20PM
   - 2.3 hours , total :  6.3 hours
-- Checking in 6/2/2016 12:40PM
+- Checking out 6/2/2016 12:40PM
+
+- Checking in 6/11/2016 6:04PM
