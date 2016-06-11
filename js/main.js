@@ -150,8 +150,8 @@ var CanvasDrawr = function(options) {
           }else {
             // this blocks is for touch events.
             $.each(event.touches, function(i, touch) {
-                var id = touch.identifier,
-                    moveX = this.pageX - offset.left - lines[id].x,
+                var id = touch.identifier;
+                var moveX = this.pageX - offset.left - lines[id].x,
                     moveY = this.pageY - offset.top - lines[id].y;
                 var ret = self.draw(id, moveX, moveY);
                 lines[id].x = ret.x;

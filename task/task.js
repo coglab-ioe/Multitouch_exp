@@ -116,7 +116,7 @@ Task.prototype = {
       // found trajectory :
 
       if(selectedTrajectoryIndex == -1){
-        if(DEBUG) alert("error");
+        if(DEBUG) alert("selectedTrajectoryIndex == -1");
         return;
       }
       var dist = this.trajectories[selectedTrajectoryIndex].startingPoint.distXY(this.traceData[this.touch_id[i]][0].x, this.traceData[this.touch_id[i]][0].y);
