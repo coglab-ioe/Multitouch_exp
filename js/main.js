@@ -77,11 +77,11 @@ var CanvasDrawr = function(options) {
           self.drawEndPoint(moveX, moveY, "black");
         }else {
           $.each(event.touches, function(i, touch) {
-              var id = touch.identifier,
-                  colors = ["red", "green", "yellow", "blue", "magenta", "orangered"],
+              var id = touch.identifier;
+              var  colors = ["red", "green", "yellow", "blue", "magenta", "orangered"],
                   mycolor = colors[Math.floor(Math.random() * colors.length)],
-                  moveX = event.pageX - offset.left ,
-                  moveY = event.pageY - offset.top ;
+                  moveX = touch.pageX - offset.left ,
+                  moveY = touch.pageY - offset.top ;
 
               lines[id] = {
                   x: moveX,
@@ -113,8 +113,8 @@ var CanvasDrawr = function(options) {
         }else {
           $.each(event.touches, function(i, touch) {
               var id = touch.identifier,
-              moveX = event.pageX - offset.left ,
-              moveY = event.pageY - offset.top ;
+              moveX = touch.pageX - offset.left ,
+              moveY = touch.pageY - offset.top ;
               tasks[taskIndex].touchend(now, moveX, moveY, id);
 
               self.drawEndPoint(moveX, moveY, "blue");
@@ -151,8 +151,8 @@ var CanvasDrawr = function(options) {
             // this blocks is for touch events.
             $.each(event.touches, function(i, touch) {
                 var id = touch.identifier;
-                var moveX = this.pageX - offset.left - lines[id].x,
-                    moveY = this.pageY - offset.top - lines[id].y;
+                var moveX = touch.pageX - offset.left - lines[id].x,
+                    moveY = touch.pageY - offset.top - lines[id].y;
                 var ret = self.draw(id, moveX, moveY);
                 lines[id].x = ret.x;
                 lines[id].y = ret.y;
