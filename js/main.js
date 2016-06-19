@@ -96,7 +96,7 @@ var CanvasDrawr = function(options) {
 
           });
         }
-    //    event.preventDefault();
+        event.preventDefault();
       },
       postTouch: function(event) {
         if(!taskStarted)
