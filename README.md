@@ -13,4 +13,5 @@
 - Checking out 6/11/2016 9:16PM
 
 - Checking in 6/18/2016 11:50PM
-- 
+- 1.4 hours, total 10.9 hours (9 hrs reported) 
+- Checking out 6/19/2016 1:14AM 
