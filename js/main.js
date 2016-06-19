@@ -1,4 +1,5 @@
 var tasks_results = [];
+var DEBUG = true;
 var colors = [
   {
     fill: "#009900",
@@ -54,7 +55,9 @@ var CanvasDrawr = function(options) {
         return self;
       },
       preTouch: function(event) {
+        
         var now = new Date().getTime();
+        if(DEBUG) console.log("preTouch");
         if ( numTaskLeft == 0){
           numTaskLeft = tasks[taskIndex].trajectories.length;
           taskStarted = true;
@@ -93,12 +96,13 @@ var CanvasDrawr = function(options) {
 
           });
         }
-        event.preventDefault();
+    //    event.preventDefault();
       },
       postTouch: function(event) {
         if(!taskStarted)
           return;
         var now = new Date().getTime();
+        if(DEBUG) console.log("postTouch");
 
         numTaskLeft--;
         pressed = false;
@@ -159,7 +163,7 @@ var CanvasDrawr = function(options) {
                 tasks[taskIndex].touchmove(now, this.pageX - offset.left, this.pageY - offset.top, id);
             });
           }
-          event.preventDefault();
+        //  event.preventDefault();
       },
       draw: function(i, changeX, changeY) {
           ctxt.strokeStyle = lines[i].color;
