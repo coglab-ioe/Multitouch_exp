@@ -21,10 +21,10 @@ Point.prototype={
   }
 }
 
-var Trajectory = function(startingPoint, endingPoint, radius = DEFAULT_RADIUS, time){
+var Trajectory = function(startingPoint, endingPoint,radius, time){
   this.startingPoint = startingPoint;
   this.endingPoint = endingPoint;
-  this.radius = radius;
+  this.radius = (radius?radius:DEFAULT_RADIUS);
   this.time = time;
 };
 
