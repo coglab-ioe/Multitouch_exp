@@ -1,5 +1,5 @@
 var DEFAULT_RADIUS = 50;
-var DEBUG = true;
+var DEBUG = false;
 
 var Point = function(x,y){
   this.x = x;
