@@ -1,3 +1,4 @@
+var firstTrial = true;
 var tasks_results = [];
 var DEBUG = true;
 var timeoutHandle = [];
@@ -253,7 +254,12 @@ $(function() {
     });
 
   $("#next-task").click(function(){
-    $(".layer-wrapper").hide();
-    myCanvas.updateTask();
+    if( firstTrial || confirm("Did you save data? The data textareas will be initialized.")){
+      $(".layer-wrapper").hide();
+      myCanvas.updateTask();
+      $("#final-trace-outcome").val("");
+      $("#final-task-outcome").val("");
+      firstTrial = false;
+    }
   });
 });
