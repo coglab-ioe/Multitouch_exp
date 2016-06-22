@@ -141,7 +141,7 @@ var CanvasDrawr = function(options) {
         $("#final-trace-outcome").val($("#final-trace-outcome").val()+ tasks[taskIndex].reportTraces());
         $("#final-task-outcome").val($("#final-task-outcome").val()+ tasks[taskIndex].reportTrajectories());
         clickid = 0;
-      }
+      },
       touch: function(event) {
           var now = new Date().getTime(),
               e = event,
