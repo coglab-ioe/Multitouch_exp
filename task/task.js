@@ -90,8 +90,7 @@ Task.prototype = {
         alert("Error : could not find the closest path");
         return;
       }
-
-      this.traceData[this.touch_id[selectedTrajectoryIndex]].push({time:_time - this.startTime, x:_x, y:_y, type:_type});
+      this.log(_time, _x, _y, "touch-end",this.touch_id[selectedTrajectoryIndex]);
     }
   },
   taskend: function(_time){
@@ -107,9 +106,6 @@ Task.prototype = {
 
     if(DEBUG)console.log(_time+", "+_x+", "+_y+", "+_type+", "+_touch_id);
     this.traceData[_touch_id].push({time:_time - this.startTime, x:_x, y:_y, type:_type});
-
-
-
   },
   reportTraces: function(){
     var string = "";
