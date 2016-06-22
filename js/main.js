@@ -93,9 +93,8 @@ var CanvasDrawr = function(options) {
                   y: moveY,
                   color: mycolor
               };
-              tasks[taskIndex].touchstart(now, moveX, moveY, id);
-              self.drawEndPoint(moveX, moveY, "black");
-
+              if (tasks[taskIndex].touchstart(now, moveX, moveY, id))
+                self.drawEndPoint(moveX, moveY, "black");
           });
         }
         event.preventDefault();

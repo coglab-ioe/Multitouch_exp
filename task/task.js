@@ -62,10 +62,16 @@ Task.prototype = {
     this.taskData.push({time: this.startTime, type: "task-start"});
   },
   touchstart:function(_time, _x, _y, _touch_id){
+    // check if the id already exists
+    for (var i=0; i< this.touch_id.length; i++){
+      if(this.touch_id[i]===_touch_id)
+        return false;
+    }
     if(DEBUG) console.log("Touch (" + this.name + ") started. (id:" +_touch_id + ", time:" + _time+", x:"+_x+", y:"+_y+")");
     this.traceData[_touch_id] = [];
     this.touch_id.push(_touch_id)
     this.log(_time, _x, _y, "touch-start",_touch_id);
+    return true;
   },
   touchend: function(_time, _x, _y, _touch_id){
     if(DEBUG) console.log("Touch (" + this.name + ") ended.")
