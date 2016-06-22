@@ -66,7 +66,33 @@ Task.prototype = {
   },
   touchend: function(_time, _x, _y, _touch_id){
     if(DEBUG) console.log("Task (" + this.name + ") ended.")
-    this.log(_time, _x, _y, "touch-end",_touch_id);
+    if (_touch_id !== null && this.traceData[_touch_id] !== undefined){
+      this.log(_time, _x, _y, "touch-end",_touch_id);
+    }
+    else{
+      // find the closest place
+      var selectedTrajectoryIndex = -1;
+      var minDist = Infinity;
+      var touchEndpoint = new Point(_x,_y);
+      for (var i=0; i< this.touch_id.length; i++){
+        if (this.traceData[this.touch_id[i]].length ==0)
+          continue;
+
+        var lastIndex =this.traceData[this.touch_id[i]].length-1
+        var distance = touchEndpoint.distXY(this.traceData[this.touch_id[i]][lastIndex].x,   this.traceData[this.touch_id[i]][lastIndex].y);
+        if(minDist >distance ){
+          selectedTrajectoryIndex = i;
+          minDist = distance;
+        }
+      }
+
+      if ( selectedTrajectoryIndex == -1){
+        alert("Error : could not find the closest path");
+        return;
+      }
+
+      this.traceData[this.touch_id[selectedTrajectoryIndex]].push({time:_time - this.startTime, x:_x, y:_y, type:_type});
+    }
   },
   taskend: function(_time){
     if(DEBUG) console.log("Task (" + this.name + ") ended.")
@@ -81,6 +107,9 @@ Task.prototype = {
 
     if(DEBUG)console.log(_time+", "+_x+", "+_y+", "+_type+", "+_touch_id);
     this.traceData[_touch_id].push({time:_time - this.startTime, x:_x, y:_y, type:_type});
+
+
+
   },
   reportTraces: function(){
     var string = "";

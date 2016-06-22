@@ -55,7 +55,7 @@ var CanvasDrawr = function(options) {
         return self;
       },
       preTouch: function(event) {
-        
+
         var now = new Date().getTime();
         if(DEBUG) console.log("preTouch");
         if ( numTaskLeft == 0){
@@ -99,9 +99,9 @@ var CanvasDrawr = function(options) {
         event.preventDefault();
       },
       postTouch: function(event) {
+        var now = new Date().getTime();
         if(!taskStarted)
           return;
-        var now = new Date().getTime();
         if(DEBUG) console.log("postTouch");
 
         numTaskLeft--;
@@ -115,14 +115,23 @@ var CanvasDrawr = function(options) {
           clickid++;
 
         }else {
-          $.each(event.touches, function(i, touch) {
-              var id = touch.identifier,
-              moveX = touch.pageX - offset.left ,
-              moveY = touch.pageY - offset.top ;
-              tasks[taskIndex].touchend(now, moveX, moveY, id);
+          if ( event.touches.length==0){
+            moveX = event.pageX - offset.left ,
+            moveY = event.pageY - offset.top ;
+            tasks[taskIndex].touchend(now, moveX, moveY);
+            self.drawEndPoint(moveX, moveY, "blue");
+          }
+          else{
+            $.each(event.touches, function(i, touch) {
+                var id = touch.identifier,
+                moveX = touch.pageX - offset.left ,
+                moveY = touch.pageY - offset.top ;
+                tasks[taskIndex].touchend(now, moveX, moveY, id);
 
-              self.drawEndPoint(moveX, moveY, "blue");
-          });
+                self.drawEndPoint(moveX, moveY, "blue");
+            });
+          }
+
         }
         if(numTaskLeft==0){
           // the task is ended ;
