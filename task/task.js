@@ -118,7 +118,7 @@ Task.prototype = {
         alert("getLastPoints error: no data logged for lastIndex");
       arr.push(new Point(this.traceData[this.touch_id[i]][lastIndex].x, this.traceData[this.touch_id[i]][lastIndex].y));
     }
-
+    return arr;
   },
   reportTraces: function(){
     var string = "";
