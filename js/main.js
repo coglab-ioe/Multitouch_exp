@@ -117,7 +117,7 @@ var CanvasDrawr = function(options) {
 
         if(numTaskLeft==0){
           self.clearTimeout();
-          self.endTask();
+          self.endTask(now);
         }
         else if(numTaskLeft < 0){
           if(DEBUG) alert("numTaskLeft < 0: deal with the boundary cases. ")
@@ -130,7 +130,7 @@ var CanvasDrawr = function(options) {
         }
         timeoutHandle = [];
       },
-      endTask: function(){
+      endTask: function(now){
         // the task is ended ;
         tasks[taskIndex].taskend(now);
         tasks[taskIndex].getLastPoints().forEach(function(point){
@@ -166,7 +166,7 @@ var CanvasDrawr = function(options) {
                 tasks[taskIndex].touchmove(now, this.pageX - offset.left, this.pageY - offset.top, id);
                 self.clearTimeout();
                 var timeout = setTimeout(function(){
-                  self.endTask();
+                  self.endTask(now);
                 }, 2000);
                 timeoutHandle.push(timeout);
             });
