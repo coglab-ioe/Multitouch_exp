@@ -65,7 +65,7 @@ Task.prototype = {
     this.log(_time, _x, _y, "touch-start",_touch_id);
   },
   touchend: function(_time, _x, _y, _touch_id){
-    if(DEBUG) console.log("Task (" + this.name + ") ended.")
+    if(DEBUG) console.log("Touch (" + this.name + ") ended.")
     if (_touch_id !== null && this.traceData[_touch_id] !== undefined){
       this.log(_time, _x, _y, "touch-end",_touch_id);
     }
@@ -104,7 +104,7 @@ Task.prototype = {
   },
   log: function(_time, _x, _y, _type,_touch_id){
 
-    if(DEBUG)console.log(_time+", "+_x+", "+_y+", "+_type+", "+_touch_id);
+  //  if(DEBUG)console.log(_time+", "+_x+", "+_y+", "+_type+", "+_touch_id);
     this.traceData[_touch_id].push({time:_time - this.startTime, x:_x, y:_y, type:_type});
   },
   reportTraces: function(){

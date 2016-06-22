@@ -57,11 +57,12 @@ var CanvasDrawr = function(options) {
       preTouch: function(event) {
 
         var now = new Date().getTime();
-        if(DEBUG) console.log("preTouch");
         if ( numTaskLeft == 0){
           numTaskLeft = tasks[taskIndex].trajectories.length;
           taskStarted = true;
         }
+        if(DEBUG) console.log("preTouch : numTaskLeft : " + numTaskLeft);
+
         if (typeof(event.touches) == "undefined"){
           pressed = true;
           console.log("pressed:"+ pressed);
@@ -102,7 +103,7 @@ var CanvasDrawr = function(options) {
         var now = new Date().getTime();
         if(!taskStarted)
           return;
-        if(DEBUG) console.log("postTouch");
+        if(DEBUG) console.log("postTouch: numTaskLeft: " + numTaskLeft);
 
         numTaskLeft--;
         pressed = false;
@@ -113,13 +114,12 @@ var CanvasDrawr = function(options) {
           tasks[taskIndex].touchend(now, moveX, moveY, clickid);
           self.drawEndPoint(moveX, moveY, "blue");
           clickid++;
-
         }else {
           if ( event.touches.length==0){
             moveX = event.pageX - offset.left ,
             moveY = event.pageY - offset.top ;
             tasks[taskIndex].touchend(now, moveX, moveY);
-            self.drawEndPoint(moveX, moveY, "blue");
+            self.drawEndPoint(moveX, moveY, "red");
           }
           else{
             $.each(event.touches, function(i, touch) {
@@ -127,11 +127,9 @@ var CanvasDrawr = function(options) {
                 moveX = touch.pageX - offset.left ,
                 moveY = touch.pageY - offset.top ;
                 tasks[taskIndex].touchend(now, moveX, moveY, id);
-
-                self.drawEndPoint(moveX, moveY, "blue");
+                self.drawEndPoint(moveX, moveY, "green");
             });
           }
-
         }
         if(numTaskLeft==0){
           // the task is ended ;
