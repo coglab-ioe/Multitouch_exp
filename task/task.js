@@ -54,9 +54,9 @@ Task.prototype = {
   taskData : [],
   touch_id : [],
   taskstart:function(){
-    traceData = {},
-    taskData = [],
-    touch_id = [];
+    this.traceData = {},
+    this.taskData = [],
+    this.touch_id = [];
     if(DEBUG) console.log("Task (" + this.name + ") started.")
     this.startTime = new Date().getTime();
     this.taskData.push({time: this.startTime, type: "task-start"});

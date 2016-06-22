@@ -109,11 +109,11 @@ var CanvasDrawr = function(options) {
 
         pressed = false;
         if (typeof(event.touches) == "undefined"){
-
+          clickid++;
         }else {
-
+          // nothing to do for now. 
         }
-        
+
         if(numTaskLeft==0){
           // the task is ended ;
           tasks[taskIndex].taskend(now);
