@@ -110,6 +110,16 @@ Task.prototype = {
   //  if(DEBUG)console.log(_time+", "+_x+", "+_y+", "+_type+", "+_touch_id);
     this.traceData[_touch_id].push({time:_time - this.startTime, x:_x, y:_y, type:_type});
   },
+  getLastPoints: function(){
+    var arr = [];
+    for (var i=0; i< this.touch_id.length; i++){
+      var lastIndex =this.traceData[this.touch_id[i]].length-1
+      if( lastIndex <0)
+        alert("getLastPoints error: no data logged for lastIndex");
+      arr.push(new Point(this.traceData[this.touch_id[i]][lastIndex].x, this.traceData[this.touch_id[i]][lastIndex].y));
+    }
+
+  },
   reportTraces: function(){
     var string = "";
     for (var i=0; i< this.touch_id.length; i++){
