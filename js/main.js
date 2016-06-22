@@ -1,5 +1,6 @@
 var tasks_results = [];
 var DEBUG = true;
+var timeoutHandle = [];
 var colors = [
   {
     fill: "#009900",
@@ -111,26 +112,36 @@ var CanvasDrawr = function(options) {
         if (typeof(event.touches) == "undefined"){
           clickid++;
         }else {
-          // nothing to do for now. 
+          // nothing to do for now.
         }
 
         if(numTaskLeft==0){
-          // the task is ended ;
-          tasks[taskIndex].taskend(now);
-          tasks[taskIndex].getLastPoints().forEach(function(point){
-            self.drawEndPoint(point.x, point.y, "green");
-          });
-          taskStarted = false;
-          $(".layer-wrapper").show();
-          $("#final-trace-outcome").val($("#final-trace-outcome").val()+ tasks[taskIndex].reportTraces());
-          $("#final-task-outcome").val($("#final-task-outcome").val()+ tasks[taskIndex].reportTrajectories());
-          clickid = 0;
+          this.clearTimeout();
+          this.endTask();
         }
         else if(numTaskLeft < 0){
           if(DEBUG) alert("numTaskLeft < 0: deal with the boundary cases. ")
         }
         event.preventDefault();
       },
+      clearTimeout: function(){
+        for (var i=0; i< timeoutHandle.length; i++){
+          clearTimeout(timeoutHandle[i]);
+        }
+        timeoutHandle = [];
+      },
+      endTask: function(){
+        // the task is ended ;
+        tasks[taskIndex].taskend(now);
+        tasks[taskIndex].getLastPoints().forEach(function(point){
+          self.drawEndPoint(point.x, point.y, "green");
+        });
+        taskStarted = false;
+        $(".layer-wrapper").show();
+        $("#final-trace-outcome").val($("#final-trace-outcome").val()+ tasks[taskIndex].reportTraces());
+        $("#final-task-outcome").val($("#final-task-outcome").val()+ tasks[taskIndex].reportTrajectories());
+        clickid = 0;
+      }
       touch: function(event) {
           var now = new Date().getTime(),
               e = event,
@@ -153,6 +164,12 @@ var CanvasDrawr = function(options) {
                 lines[id].x = ret.x;
                 lines[id].y = ret.y;
                 tasks[taskIndex].touchmove(now, this.pageX - offset.left, this.pageY - offset.top, id);
+                var it = this;
+                this.clearTimeout();
+                var timeout = setTimeout(function(){
+                  it.endTask();
+                }, 2000);
+                timeoutHandle.push(timeout);
             });
           }
         //  event.preventDefault();
