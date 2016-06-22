@@ -103,38 +103,23 @@ var CanvasDrawr = function(options) {
         var now = new Date().getTime();
         if(!taskStarted)
           return;
-        if(DEBUG) console.log("postTouch: numTaskLeft: " + numTaskLeft);
 
         numTaskLeft--;
+        if(DEBUG) console.log("postTouch: numTaskLeft: " + numTaskLeft);
+
         pressed = false;
         if (typeof(event.touches) == "undefined"){
-          if(DEBUG)console.log("pressed:"+ false);
-          var moveX = event.pageX - offset.left ,
-          moveY = event.pageY - offset.top ;
-          tasks[taskIndex].touchend(now, moveX, moveY, clickid);
-          self.drawEndPoint(moveX, moveY, "blue");
-          clickid++;
+
         }else {
-          if ( event.touches.length==0){
-            moveX = event.pageX - offset.left ,
-            moveY = event.pageY - offset.top ;
-            tasks[taskIndex].touchend(now, moveX, moveY);
-            self.drawEndPoint(moveX, moveY, "red");
-          }
-          else{
-            $.each(event.touches, function(i, touch) {
-                var id = touch.identifier,
-                moveX = touch.pageX - offset.left ,
-                moveY = touch.pageY - offset.top ;
-                tasks[taskIndex].touchend(now, moveX, moveY, id);
-                self.drawEndPoint(moveX, moveY, "green");
-            });
-          }
+
         }
+        
         if(numTaskLeft==0){
           // the task is ended ;
           tasks[taskIndex].taskend(now);
-
+          tasks[taskIndex].getLastPoints().forEach(function(point){
+            self.drawEndPoint(point.x, point.y, "green");
+          });
           taskStarted = false;
           $(".layer-wrapper").show();
           $("#final-trace-outcome").val($("#final-trace-outcome").val()+ tasks[taskIndex].reportTraces());
