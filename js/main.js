@@ -193,17 +193,22 @@ var CanvasDrawr = function(options) {
         ctxt.stroke();
       },
       updateTask: function(){
-        ctxt.clearRect(0, 0, canvas.width, canvas.height);
         taskIndex++;
         if(taskIndex >= tasks.length){
-          if( firstTrial || confirm("Did you save data? The data textareas will be initialized.")){
+          if( firstTrial || confirm("Did you save data? Textareas will be initialized.")){
             taskIndex = 0;
             $("#final-trace-outcome").val("");
             $("#final-task-outcome").val("");
 
           }
-          else{}
+          else{ // wait for the user to save ata
+            return;
+          }
         }
+
+
+        ctxt.clearRect(0, 0, canvas.width, canvas.height);
+
         $(".layer-wrapper").hide();
         firstTrial = false;
 
