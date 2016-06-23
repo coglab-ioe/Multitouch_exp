@@ -41,7 +41,7 @@ var CanvasDrawr = function(options) {
   var offset = $(canvas).offset();
   var pressed = false;
   var numTaskLeft = 0, taskStarted = false;
-  var taskIndex = 0;
+  var taskIndex = -1;
   var clickid = 0;
   var self = {
       init: function() {
@@ -194,6 +194,18 @@ var CanvasDrawr = function(options) {
       },
       updateTask: function(){
         ctxt.clearRect(0, 0, canvas.width, canvas.height);
+        taskIndex++;
+        if(taskIndex >= tasks.length){
+          if( firstTrial || confirm("Did you save data? The data textareas will be initialized.")){
+            taskIndex = 0;
+            $("#final-trace-outcome").val("");
+            $("#final-task-outcome").val("");
+
+          }
+          else{}
+        }
+        $(".layer-wrapper").hide();
+        firstTrial = false;
 
         var task = tasks[taskIndex];
 
@@ -254,12 +266,6 @@ $(function() {
     });
 
   $("#next-task").click(function(){
-    if( firstTrial || confirm("Did you save data? The data textareas will be initialized.")){
-      $(".layer-wrapper").hide();
-      myCanvas.updateTask();
-      $("#final-trace-outcome").val("");
-      $("#final-task-outcome").val("");
-      firstTrial = false;
-    }
+    myCanvas.updateTask();
   });
 });
