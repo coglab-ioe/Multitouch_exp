@@ -8,39 +8,124 @@
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
 
-  <link rel="stylesheet" href="css/main.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <!-- color picker-->
+  <link href="js/library/colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+  <script src="js/library/colorpicker/js/bootstrap-colorpicker.js"></script>
   <script src="task/task.js"></script>
   <script src="task/tasks.js"></script>
   <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
 
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
-
-
-
-
 </head>
 
 <body>
-  <a name="#canvas"></a>
+
   <div class="main_canvas">
     <canvas id="multitouch_task"></canvas>
   </div>
-  <a name="#export"></a>
-  <div class="export-textarea">
-    <textarea id = "final-trace-outcome"></textarea>
-    <textarea id = "final-task-outcome"></textarea>
-    <br><br><br><br><br><br><br>
-  </div>
   <div class = "layer-wrapper">
-    <div class="layer">
-      <button id ="next-task"> Task Complete. Press for next task. </button>
+    <ul class="nav nav-tabs" id="myTab">
+		  <li class="active"><a data-target="#tab-main" data-toggle="tab"><h3>Main</h3></a></li>
+		  <li><a data-target="#tab-setting" data-toggle="tab"><h3>Setting</h3></a></li>
+		  <li><a data-target="#tab-data" data-toggle="tab"><h3>Data</h3></a></li>
+		</ul>
+    <div class="tab-content" style="height:100%;">
+      <div class="tab-pane active" id="tab-main" style="height:100%;">
+        <div class = "tab-wrapper" style="height:80%;">
+          <div class="tasks center-layer">
+            <div><h1 id="task-msg">Press when you are ready for Task <span class="task-number">-</span>.<h1></div>
+            <div>
+              <button id ="next-task" class = "btn-lg btn btn-success"> NEXT </button>
+            </div>
+          </div>
+          <div class="tasks-done center-layer">
+            <div><h1 id="task-msg">Finished. Save your data before you leave <h1></div>
+            <div>
+              <button id ="start-over" class = "btn-lg btn btn-success"> START OVER </button>
+            </div>
+          </div>
+          <div class="countdown center-layer">
+            <h1>The task starts in <span id="countdown-number"> - </span> s.</h1>
+          </div>
+          <div id = "task-progress">
+            <h3><span class="task-number">0</span> / <span class="total-task-number">-</span></h3>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane tab-wrapper" id="tab-setting">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 setting_col">
+                  <div class="alert alert-info" role="alert">
+                    <h4>
+                      Visual
+                    </h4>
+                  </div>
+                  <div><h4>Path Drawing</h4>  </div>
+
+                  <div id = "path-draw-toggle" class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="checkbox" checked autocomplete="off">
+                      <span id = "path-draw-toggle-status">(True)</span>
+                    </label>
+                  </div>
+                  <br><br>
+                  <div><h4>Path Color</h4>
+                  </div>
+                  <div id="cp7" class="inl-bl"></div>
+
+                </div>
+                <div class="col-sm-4 setting_col">
+                  <div class="alert alert-warning" role="alert">
+                    <h4>
+                      Audio
+                    </h4>
+                  </div>
+                </div>
+                <div class="col-sm-4 setting_col">
+                  <div class="alert alert-danger" role="alert">
+                    <h4>
+                      Misc.
+                    </h4>
+
+                  </div>
+                  <div><h4>Countdown</h4>  </div>
+                  <div class="btn-group">
+                    <button type="button" id = "countdown-decrease" class="btn btn-danger">-</button>
+                    <button type="button" id = "countdown-input" class="btn">3</button>
+                    <button type="button" id = "countdown-increase" class="btn btn-success">+</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="tab-pane tab-wrapper" id="tab-data">
+        <div class="export-textarea">
+          <br><br>
+          <textarea id = "final-trace-outcome"></textarea>
+          <textarea id = "final-task-outcome"></textarea>
+        </div>
+      </div>
     </div>
+
+
+
   </div>
 </body>
 </html>
