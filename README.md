@@ -14,6 +14,7 @@
     * Audio Volume
   * Visual Color options
     * color picker
+  * Countdown Seconds
 
 
 ## Checking In/Out
