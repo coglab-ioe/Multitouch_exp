@@ -28,6 +28,10 @@ textarea {  /* position is inherited */
   text-align: left;
 }
 
+.tab-buttons{
+  margin: 10px;
+}
+
 .alert {
   padding:8px 8px 0px 13px;
 }
@@ -36,7 +40,7 @@ textarea {  /* position is inherited */
 .layer-wrapper{
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
-  text-align: center;
+  text-align: left;
   color:white;
   top: 0;
   left: 0;
@@ -47,6 +51,7 @@ textarea {  /* position is inherited */
 .tab-wrapper{
   width:100%;
   display:table;
+  text-align: center;
 }
 
 

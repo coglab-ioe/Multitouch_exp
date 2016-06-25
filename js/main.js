@@ -357,5 +357,28 @@ $(function() {
 
   });
 
+  $("#tab-main-button").click(function(){
+    $("#tab-main").show();
+    $("#tab-setting").hide();
+    $("#tab-data").hide();
+  });
+
+  $("#tab-setting-button").click(function(){
+    $("#tab-setting").show();
+    $("#tab-main").hide();
+    $("#tab-data").hide();
+
+
+  });
+
+  $("#tab-data-button").click(function(){
+    $("#tab-data").show();
+    $("#tab-setting").hide();
+    $("#tab-main").hide();
+  });
+
+  $("#tab-data").hide();
+  $("#tab-setting").hide();
+
 
 });

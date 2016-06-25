@@ -40,14 +40,14 @@
     <canvas id="multitouch_task"></canvas>
   </div>
   <div class = "layer-wrapper">
-    <ul class="nav nav-tabs" id="myTab">
-		  <li class="active"><a data-target="#tab-main" data-toggle="tab"><h3>Main</h3></a></li>
-		  <li><a data-target="#tab-setting" data-toggle="tab"><h3>Setting</h3></a></li>
-		  <li><a data-target="#tab-data" data-toggle="tab"><h3>Data</h3></a></li>
-		</ul>
+    <div class="btn-group btn-group-lg tab-buttons" role="group" aria-label="Large button group">
+      <button type="button" id="tab-main-button" class="btn btn-default">Main</button>
+      <button type="button" id="tab-setting-button"class="btn btn-default">Setting</button>
+      <button type="button" id="tab-data-button"class="btn btn-default">Data</button>
+    </div>
     <div class="tab-content" style="height:100%;">
-      <div class="tab-pane active" id="tab-main" style="height:100%;">
-        <div class = "tab-wrapper" style="height:80%;">
+      <div class="tab-pane tab-wrapper active" id="tab-main" style="height:80%;">
+        <div class = "tab-wrapper" style="height:100%;">
           <div class="tasks center-layer">
             <div><h1 id="task-msg">Press when you are ready for Task <span class="task-number">-</span>.<h1></div>
             <div>
@@ -63,9 +63,7 @@
           <div class="countdown center-layer">
             <h1>The task starts in <span id="countdown-number"> - </span> s.</h1>
           </div>
-          <div id = "task-progress">
-            <h3><span class="task-number">0</span> / <span class="total-task-number">-</span></h3>
-          </div>
+
         </div>
       </div>
       <div class="tab-pane tab-wrapper" id="tab-setting">
@@ -126,6 +124,9 @@
 
 
 
+  </div>
+  <div id = "task-progress">
+    <h3><span class="task-number">0</span> / <span class="total-task-number">-</span></h3>
   </div>
 </body>
 </html>
