@@ -1,12 +1,12 @@
 # cogioe.github.io
 
-## UI Design Tabs 
+## UI Design Tabs
 
 * Task Management
-  * Current Task Index / Total Task 
+  * Current Task Index / Total Task
   *   Next Button
-  *   Refresh 
-  *   CountDown 
+  *   Refresh
+  *   CountDown
 * Setting
   * Audio
     * Audio Toggle
@@ -16,6 +16,9 @@
     * color picker
   * Countdown Seconds
 
+## left
+  * Audio
+  * easy share
 
 ## Checking In/Out
 
@@ -44,3 +47,5 @@
 - Checking out 6/22/2016 10:10AM
 
 - Checking in 6/25/2016 3:59PM
+  - 3.5 hours, total: 17.2 hours
+- Checking out 6/25/2016 7:30PM
