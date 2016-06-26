@@ -211,13 +211,14 @@ OscillatorSample.prototype.toggle = function() {
 
 $(function(){
 
+  var sample = new OscillatorSample();
+  sample.toggle();
 
-  var osc = WX.SimpleOsc();
-        osc.to(WX.Master);
-        osc.noteOn(60, 64);
+  /*
   if(soundEnabled){
     compressor = context.createDynamicsCompressor()
     reverb = context.createConvolver();
+    compressor
 
     loadSounds(buffers, soundmap, function(){
       reverb.buffer = buffers['ir1'];
@@ -244,5 +245,5 @@ $(function(){
   //function(delay, A,D, peakLevel, sustainlevel)
   //function(time, A,D,S,R, peakLevel, sustainlevel){
   voice.output.play(0,0.2,0.2,0.2,0.4,voice.maxGain*2.0,voice.maxGain );
-
+*/
 });
