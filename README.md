@@ -51,3 +51,5 @@
 - Checking out 6/25/2016 7:30PM
 
 - Checking in 6/25/2016 10:17PM
+  - 1.2 horus, total: 18.4 hours
+- Checking in 6/25/2016 11:29PM
