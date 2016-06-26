@@ -9,16 +9,7 @@ if (!audioContext.createScriptProcessor)
   audioContext.createScriptProcessor = audioContext.createJavaScriptNode;
 
 // shim layer with setTimeout fallback
-window.requestAnimFrame = (function(){
-return  window.requestAnimationFrame       ||
-  window.webkitRequestAnimationFrame ||
-  window.mozRequestAnimationFrame    ||
-  window.oRequestAnimationFrame      ||
-  window.msRequestAnimationFrame     ||
-  function( callback ){
-  window.setTimeout(callback, 1000 / 60);
-};
-})();
+
 
 
 function playSound(buffer, time) {
@@ -157,3 +148,7 @@ OscillatorSample.prototype.changeDetune = function(val) {
 OscillatorSample.prototype.changeType = function(type) {
   this.oscillator.type = type;
 };
+
+
+var osc = new OscillatorSample();
+osc.play();
