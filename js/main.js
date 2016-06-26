@@ -36,7 +36,7 @@ var EndPointRadius = 20;
 $(function() {
 
   var canvas = document.getElementById('multitouch_task'),
-          context = canvas.getContext('2d');
+      context = canvas.getContext('2d');
 
   var canvas_span = 0.98;
   var DEFAULT_COUNTDOWN = 3;

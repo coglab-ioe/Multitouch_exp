@@ -1,12 +1,12 @@
-// Start off by initializing a new context.
-context = new (window.AudioContext || window.webkitAudioContext)();
+// Start off by initializing a new audioContext.
+audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-if (!context.createGain)
-  context.createGain = context.createGainNode;
-if (!context.createDelay)
-  context.createDelay = context.createDelayNode;
-if (!context.createScriptProcessor)
-  context.createScriptProcessor = context.createJavaScriptNode;
+if (!audioContext.createGain)
+  audioContext.createGain = audioContext.createGainNode;
+if (!audioContext.createDelay)
+  audioContext.createDelay = audioContext.createDelayNode;
+if (!audioContext.createScriptProcessor)
+  audioContext.createScriptProcessor = audioContext.createJavaScriptNode;
 
 // shim layer with setTimeout fallback
 window.requestAnimFrame = (function(){
@@ -22,9 +22,9 @@ return  window.requestAnimationFrame       ||
 
 
 function playSound(buffer, time) {
-  var source = context.createBufferSource();
+  var source = audioContext.createBufferSource();
   source.buffer = buffer;
-  source.connect(context.destination);
+  source.connect(audioContext.destination);
   source[source.start ? 'start' : 'noteOn'](time);
 }
 
@@ -37,7 +37,7 @@ function loadSounds(obj, soundMap, callback) {
     names.push(name);
     paths.push(path);
   }
-  bufferLoader = new BufferLoader(context, paths, function(bufferList) {
+  bufferLoader = new BufferLoader(audioContext, paths, function(bufferList) {
     for (var i = 0; i < bufferList.length; i++) {
       var buffer = bufferList[i];
       var name = names[i];
@@ -53,8 +53,8 @@ function loadSounds(obj, soundMap, callback) {
 
 
 
-function BufferLoader(context, urlList, callback) {
-  this.context = context;
+function BufferLoader(audioContext, urlList, callback) {
+  this.audioContext = audioContext;
   this.urlList = urlList;
   this.onload = callback;
   this.bufferList = new Array();
@@ -71,7 +71,7 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
 
   request.onload = function() {
     // Asynchronously decode the audio file data in request.response
-    loader.context.decodeAudioData(
+    loader.audioContext.decodeAudioData(
       request.response,
       function(buffer) {
         if (!buffer) {
@@ -125,12 +125,12 @@ function OscillatorSample() {
 
 OscillatorSample.prototype.play = function() {
   // Create some sweet sweet nodes.
-  this.oscillator = context.createOscillator();
-  this.analyser = context.createAnalyser();
+  this.oscillator = audioContext.createOscillator();
+  this.analyser = audioContext.createAnalyser();
 
   // Setup the graph.
   this.oscillator.connect(this.analyser);
-  this.analyser.connect(context.destination);
+  this.analyser.connect(audioContext.destination);
 
   this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);
 
