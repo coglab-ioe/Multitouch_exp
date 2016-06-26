@@ -1,4 +1,3 @@
-context = null;
 compressor = null;
 reverb = null;
 soundEnabled = true;
@@ -11,6 +10,48 @@ var soundmap = {
 function noteNum2Freq(num){
     return Math.pow(2,(num-57)/12) * 440
 }
+
+// Start off by initializing a new context.
+context = new (window.AudioContext || window.webkitAudioContext)();
+
+if (!context.createGain)
+  context.createGain = context.createGainNode;
+if (!context.createDelay)
+  context.createDelay = context.createDelayNode;
+if (!context.createScriptProcessor)
+  context.createScriptProcessor = context.createJavaScriptNode;
+
+function playSound(buffer, time) {
+  var source = context.createBufferSource();
+  source.buffer = buffer;
+  source.connect(context.destination);
+  source[source.start ? 'start' : 'noteOn'](time);
+}
+
+function loadSounds(obj, soundMap, callback) {
+  // Array-ify
+  var names = [];
+  var paths = [];
+  for (var name in soundMap) {
+    var path = soundMap[name];
+    names.push(name);
+    paths.push(path);
+  }
+  bufferLoader = new BufferLoader(context, paths, function(bufferList) {
+    for (var i = 0; i < bufferList.length; i++) {
+      var buffer = bufferList[i];
+      var name = names[i];
+      obj[name] = buffer;
+    }
+    if (callback) {
+      callback();
+    }
+  });
+  bufferLoader.load();
+}
+
+
+
 
 function BufferLoader(context, urlList, callback) {
   this.context = context;
@@ -47,9 +88,8 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
     );
   }
 
-  request.onerror = function(error) {
-    console.log('BufferLoader: XHR error', error);
-    debugger;
+  request.onerror = function() {
+    alert('BufferLoader: XHR error');
   }
 
   request.send();
@@ -59,32 +99,6 @@ BufferLoader.prototype.load = function() {
   for (var i = 0; i < this.urlList.length; ++i)
   this.loadBuffer(this.urlList[i], i);
 };
-
-
-
-function loadSounds(obj, soundMap, callback) {
-  // Array-ify
-  var names = [];
-  var paths = [];
-  for (var name in soundMap) {
-    var path = soundMap[name];
-    names.push(name);
-    paths.push(path);
-  }
-  var bufferLoader = new BufferLoader(context, paths, function(bufferList) {
-    for (var i = 0; i < bufferList.length; i++) {
-      var buffer = bufferList[i];
-      var name = names[i];
-      obj[name] = buffer;
-    }
-    if (callback) {
-      callback();
-    }
-  });
-  bufferLoader.load();
-}
-
-
 
 
 function ADSR(){
@@ -164,6 +178,36 @@ ScissorVoice.prototype.detune = function(detune){
 ScissorVoice.prototype.connect = function(target){
   this.output.node.connect(target);
 }
+
+
+
+function OscillatorSample() {
+  this.isPlaying = false;
+  this.WIDTH = 640;
+  this.HEIGHT = 240;
+}
+
+OscillatorSample.prototype.play = function() {
+  // Create some sweet sweet nodes.
+  this.oscillator = context.createOscillator();
+  this.analyser = context.createAnalyser();
+
+  // Setup the graph.
+  this.oscillator.connect(context.destination);
+
+  this.oscillator[this.oscillator.start ? 'start' : 'noteOn'](0);
+
+};
+
+OscillatorSample.prototype.stop = function() {
+  this.oscillator.stop(0);
+};
+
+OscillatorSample.prototype.toggle = function() {
+  (this.isPlaying ? this.stop() : this.play());
+  this.isPlaying = !this.isPlaying;
+
+};
 
 $(function(){
 
