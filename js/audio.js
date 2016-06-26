@@ -168,6 +168,9 @@ ScissorVoice.prototype.connect = function(target){
 $(function(){
 
 
+  var osc = WX.SimpleOsc();
+        osc.to(WX.Master);
+        osc.noteOn(60, 64);
   if(soundEnabled){
     try {
       // still needed for Safari
