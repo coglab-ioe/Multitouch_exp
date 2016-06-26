@@ -5,7 +5,7 @@ soundEnabled = true;
 
 var buffers = {};
 var soundmap = {
-    'ir1' : './sound/ir1.wav'
+    'ir1' : './js/sound/ir1.wav'
 };
 
 function noteNum2Freq(num){
@@ -194,7 +194,7 @@ $(function(){
   var testOsc = context.createOscillator();
   testOsc.connect(compressor);
   testOsc.start(0);
-  testOsc.stop(context.currentTime + 0.3);
+  testOsc.stop(context.currentTime + 3);
 
 
   var oscType = ["sine","sine","triangle","triangle","sawtooth","square","triangle","sawtooth","square" ];
