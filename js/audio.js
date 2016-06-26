@@ -171,7 +171,7 @@ $(function(){
   if(soundEnabled){
     try {
       // still needed for Safari
-      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      window.AudioContext = window.webkitAudioContext || window.AudioContext ;
 
     } catch(e) {
       // API not supported
