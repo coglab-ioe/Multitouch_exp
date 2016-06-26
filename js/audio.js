@@ -216,15 +216,6 @@ $(function(){
         osc.to(WX.Master);
         osc.noteOn(60, 64);
   if(soundEnabled){
-    try {
-      // still needed for Safari
-      window.AudioContext = window.webkitAudioContext || window.AudioContext ;
-
-    } catch(e) {
-      // API not supported
-      alert('Web Audio API not supported, please use most recent Chrome (41+), FireFox(31+) or Safari (iOS 7.1+).');
-    }
-    context = new window.AudioContext();
     compressor = context.createDynamicsCompressor()
     reverb = context.createConvolver();
 
