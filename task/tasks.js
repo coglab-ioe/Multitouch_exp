@@ -34,5 +34,5 @@ var task4 = new Task("4thTask", [trajectory6, trajectory7]);
 
 
 tasks = [
-  task1, task2, task3
+  task1, task2, task3, task4
 ]
