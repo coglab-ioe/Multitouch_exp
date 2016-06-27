@@ -19,7 +19,7 @@ var startingPoint4 = new Point(100,200);
 var endingPoint4 = new Point(120,400);
 var startingPoint5 = new Point(200,200);
 var endingPoint5 = new Point(220,400);
-var trajectory4 = new Trajectory(startingPoint4,endingPoint4,80);
+var trajectory4 = new Trajectory(startingPoint4,endingPoint4,100);
 var trajectory5 = new Trajectory(startingPoint5,endingPoint5,80);
 var task3 = new Task("3rdTask", [trajectory4, trajectory5]);
 
