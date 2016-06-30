@@ -153,7 +153,7 @@ var task4_4 = new Task("one-touch (inside) in 135 degree", [trajectory4_4]);
 
 
 tasks = [
-  task1_1, task1_2, task1_3, task1_4, task1_5, task1_6, task1_7, task1_8
+  task1_1, task2_2, task1_3, task1_4, task1_5, task1_6, task1_7, task1_8
 ]
 
 //tasks = [
