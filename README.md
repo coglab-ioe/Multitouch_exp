@@ -22,6 +22,7 @@
    * two textareas --> one textarea
    * timeout 2s --> 0.5s 
    * distance --> round up at the 4th floating points
+   * Date Time or Name input for distinction. 
 
 ## left
   * Audio
