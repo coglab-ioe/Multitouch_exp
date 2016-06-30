@@ -8,7 +8,7 @@ var task1 = new Task("1stTask", [trajectory1]);
 var startingPoint2 = new Point(500,300);
 var endingPoint2 = new Point(500,100);
 var trajectory2 = new Trajectory(startingPoint2,endingPoint2,50);
-var task1 = new Task("2ndTask", [trajectory2]);
+var task2 = new Task("2ndTask", [trajectory2]);
 
 
 // Task 1
