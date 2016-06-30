@@ -15,6 +15,13 @@
   * Visual Color options
     * color picker
   * Countdown Seconds
+  * 
+  
+## TODO 
+   * point specification by percentage (relative ratio) 
+   * two textareas --> one textarea
+   * timeout 2s --> 0.5s 
+   * distance --> round up at the 4th floating points
 
 ## left
   * Audio
