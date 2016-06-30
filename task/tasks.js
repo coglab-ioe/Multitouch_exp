@@ -38,8 +38,10 @@ var task2 = new Task("1stTask", [trajectory1]);
 //var trajectory7 = new Trajectory(startingPoint7,endingPoint7,50);
 //var task4 = new Task("4thTask", [trajectory6, trajectory7]);
 
-
-
 tasks = [
-  task1, task2, task3, task4
+  task1
 ]
+
+//tasks = [
+//  task1, task2, task3, task4
+//]
