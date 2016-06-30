@@ -146,7 +146,7 @@ var task4_3 = new Task("one-touch (inside) in 90 degree", [trajectory4_3]);
 
 // Task 4_4: one-touch (inside) in 135 degree
 var startingPoint4_4 = new Point(500-200/1.414,300-200/1.414);
-var endingPoint4_4_= new Point(500-30/1.414,300-30/1.414);
+var endingPoint4_4 = new Point(500-30/1.414,300-30/1.414);
 var trajectory4_4 = new Trajectory(startingPoint4_4,endingPoint4_4,50);
 var task4_4 = new Task("one-touch (inside) in 135 degree", [trajectory4_4]);
 
@@ -160,10 +160,10 @@ var task4_4 = new Task("one-touch (inside) in 135 degree", [trajectory4_4]);
 //  task2_1, task2_2, task2_3, task2_4
 //]
 
-tasks = [
-  task3_1, task3_2, task3_3, task3_4
-]
-
 //tasks = [
-//  task4_1, task4_2, task4_3, task4_4
+// task3_1, task3_2, task3_3, task3_4
 //]
+
+tasks = [
+  task4_1, task4_2, task4_3, task4_4
+]
