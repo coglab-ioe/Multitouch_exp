@@ -46,11 +46,11 @@ var endingPoint1_8 = new Point(500+200/1.414,300+200/1.414);
 var trajectory1_8 = new Trajectory(startingPoint1_8,endingPoint1_8,50);
 var task1_8 = new Task("one-touch in 315 degree", [trajectory1_8]);
 
-// Task 2_1: two-touch in 0 degree
-var startingPoint2_1_1 = new Point(500,400);
-var endingPoint2_1_1 = new Point(300,400);
-var startingPoint2_1_2 = new Point(700,400);
-var endingPoint2_1_2 = new Point(900,400);
+// Task 2_1: two-touch (pinch) in 0 degree
+var startingPoint2_1_1 = new Point(500+200,300);
+var endingPoint2_1_1 = new Point(500+30,300);
+var startingPoint2_1_2 = new Point(500-200,300);
+var endingPoint2_1_2 = new Point(500-30,300);
 var trajectory2_1_1 = new Trajectory(startingPoint2_1_1,endingPoint2_1_1,50);
 var trajectory2_1_2 = new Trajectory(startingPoint2_1_2,endingPoint2_1_2,50);
 var task2_1 = new Task("two-touch in 0 degree", [trajectory2_1_1, trajectory2_1_2]);
