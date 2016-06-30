@@ -53,7 +53,37 @@ var startingPoint2_1_2 = new Point(500-200,300);
 var endingPoint2_1_2 = new Point(500-30,300);
 var trajectory2_1_1 = new Trajectory(startingPoint2_1_1,endingPoint2_1_1,50);
 var trajectory2_1_2 = new Trajectory(startingPoint2_1_2,endingPoint2_1_2,50);
-var task2_1 = new Task("two-touch in 0 degree", [trajectory2_1_1, trajectory2_1_2]);
+var task2_1 = new Task("two-touch (pinch) in 0 degree", [trajectory2_1_1, trajectory2_1_2]);
+
+// Task 2_2: two-touch (pinch) in 45 degree
+var startingPoint2_2_1 = new Point(500+200/1.414,300-200/1.414);
+var endingPoint2_2_1 = new Point(500+30/1.414,300-30/1.414);
+var startingPoint2_2_2 = new Point(500-200/1.414,300+200/1.414);
+var endingPoint2_2_2 = new Point(500-30/1.414,300+30/1.414);
+var trajectory2_2_1 = new Trajectory(startingPoint2_2_1,endingPoint2_2_1,50);
+var trajectory2_2_2 = new Trajectory(startingPoint2_2_2,endingPoint2_2_2,50);
+var task2_2 = new Task("two-touch (pinch) in 45 degree", [trajectory2_2_1, trajectory2_2_2]);
+
+// Task 2_3: two-touch (pinch) in 90 degree
+var startingPoint2_3_1 = new Point(500,300-200);
+var endingPoint2_3_1 = new Point(500,300-30/1.414);
+var startingPoint2_3_2 = new Point(500,300+200);
+var endingPoint2_3_2 = new Point(500,300+30/1.414);
+var trajectory2_3_1 = new Trajectory(startingPoint2_3_1,endingPoint2_3_1,50);
+var trajectory2_3_2 = new Trajectory(startingPoint2_3_2,endingPoint2_3_2,50);
+var task2_3 = new Task("two-touch (pinch) in 90 degree", [trajectory2_3_1, trajectory2_3_2]);
+
+// Task 2_4: two-touch (pinch) in 135 degree
+var startingPoint2_4_1 = new Point(500-200/1.414,300-200/1.414);
+var endingPoint2_4_1 = new Point(500-30/1.414,300-30/1.414);
+var startingPoint2_4_2 = new Point(500+200/1.414,300+200/1.414);
+var endingPoint2_4_2 = new Point(500+30/1.414,300+30/1.414);
+var trajectory2_4_1 = new Trajectory(startingPoint2_4_1,endingPoint2_4_1,50);
+var trajectory2_4_2 = new Trajectory(startingPoint2_4_2,endingPoint2_4_2,50);
+var task2_4 = new Task("two-touch (pinch) in 135 degree", [trajectory2_4_1, trajectory2_4_2]);
+
+
+
 
 // Task 1
 //var startingPoint1 = new Point(0,0);
@@ -88,10 +118,10 @@ var task2_1 = new Task("two-touch in 0 degree", [trajectory2_1_1, trajectory2_1_
 //var trajectory7 = new Trajectory(startingPoint7,endingPoint7,50);
 //var task4 = new Task("4thTask", [trajectory6, trajectory7]);
 
-tasks = [
-  task1_1, task1_2, task1_3, task1_4, task1_5, task1_6, task1_7, task1_8, task2_1 
-]
+//tasks = [
+//  task1_1, task1_2, task1_3, task1_4, task1_5, task1_6, task1_7, task1_8
+//]
 
 tasks = [
-  task2_1 
+  task2_1, task2_2, task2_3, task2_4
 ]
