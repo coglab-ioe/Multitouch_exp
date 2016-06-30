@@ -4,6 +4,12 @@ var endingPoint1 = new Point(500+200,300);
 var trajectory1 = new Trajectory(startingPoint1,endingPoint1,50);
 var task1 = new Task("1stTask", [trajectory1]);
 
+// Task 1: one-touch in 90 degree
+var startingPoint1 = new Point(500,300);
+var endingPoint1 = new Point(500,100);
+var trajectory1 = new Trajectory(startingPoint1,endingPoint1,50);
+var task1 = new Task("1stTask", [trajectory1]);
+
 
 // Task 1
 //var startingPoint1 = new Point(0,0);
