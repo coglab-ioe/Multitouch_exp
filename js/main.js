@@ -39,7 +39,7 @@ $(function() {
       context = canvas.getContext('2d');
 
   var canvas_span = 0.98;
-  var DEFAULT_COUNTDOWN = 3;
+  var DEFAULT_COUNTDOWN = 0;
   var countdown = DEFAULT_COUNTDOWN;
 
   var resizeCanvas = function() {
