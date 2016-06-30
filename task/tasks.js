@@ -45,7 +45,7 @@ var task2 = new Task("2ndTask", [trajectory2]);
 //var task4 = new Task("4thTask", [trajectory6, trajectory7]);
 
 tasks = [
-  task1, tast2
+  task1, task2
 ]
 
 //tasks = [
