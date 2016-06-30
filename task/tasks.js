@@ -1,6 +1,6 @@
 // Task 1
 
-var startingPoint1 = new Point(100,100);
+var startingPoint1 = new Point(0,0);
 var endingPoint1 = new Point(200,200);
 var trajectory1 = new Trajectory(startingPoint1,endingPoint1 );
 var startingPoint2 = new Point(400,100);
