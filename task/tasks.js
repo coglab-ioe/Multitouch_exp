@@ -1,7 +1,7 @@
 // Task 1: one-touch in 0 degree
 var startingPoint1 = new Point(500,300);
 var endingPoint1 = new Point(700,300);
-var trajectory1 = new Trajectory(startingPoint1,endingPoint1,200);
+var trajectory1 = new Trajectory(startingPoint1,endingPoint1,150);
 var task1 = new Task("1stTask", [trajectory1]);
 
 
