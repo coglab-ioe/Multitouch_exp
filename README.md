@@ -15,14 +15,14 @@
   * Visual Color options
     * color picker
   * Countdown Seconds
-  * 
-  
-## TODO 
-   * point specification by percentage (relative ratio) 
+  *
+
+## TODO
+   * point specification by percentage (relative ratio)
    * two textareas --> one textarea
-   * timeout 2s --> 0.5s 
+   * timeout 2s --> 0.5s
    * distance --> round up at the 4th floating points
-   * Date Time or Name input for distinction. 
+   * Date Time or Name input for distinction.
 
 ## left
   * Audio
@@ -61,3 +61,5 @@
 - Checking in 6/25/2016 10:17PM
   - 1.2 horus, total: 18.4 hours
 - Checking in 6/25/2016 11:29PM
+
+- Checking in 7/1/2016 9:20PM
