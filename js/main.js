@@ -1,3 +1,5 @@
+TRACE_REPORT_START = "\n________TRACE REPORT START HERE________\n";
+TASK_REPORT_START = "\n________TASK REPORT START HERE________\n";
 
 var taskIndex = -1;
 var firstTrial = true;
@@ -6,6 +8,14 @@ var DEBUG = true;
 var draw_path = true;
 var path_color = "black";
 var timeoutHandle = [];
+if(exp_sets && exp_sets.length>0){
+  // nothing to do actually.
+}else{
+  alert("Experiment Sets are not specified");
+}
+
+var tasks = exp_sets[0];
+
 var colors = [
   {
     fill: "#009900",
@@ -38,14 +48,13 @@ $(function() {
   var canvas = document.getElementById('multitouch_task'),
       context = canvas.getContext('2d');
 
-  var canvas_span = 0.98;
-  var DEFAULT_COUNTDOWN = 5;
   var countdown = DEFAULT_COUNTDOWN;
 
   var resizeCanvas = function() {
     canvas.width = window.innerWidth * canvas_span;
     canvas.height = window.innerHeight* canvas_span;
   }
+
   var nextTask = function(){
     taskIndex++;
     if(taskIndex >= tasks.length){
@@ -88,20 +97,19 @@ $(function() {
 
   var endTask = function(){
     $(".layer-wrapper").show();
+
+    //$("#final-trace-outcome").val($("#final-trace-outcome").val()+ TRACE_REPORT_START);
     $("#final-trace-outcome").val($("#final-trace-outcome").val()+ tasks[taskIndex].reportTraces());
+    //$("#final-task-outcome").val($("#final-task-outcome").val()+ TASK_REPORT_START);
     $("#final-task-outcome").val($("#final-task-outcome").val()+ tasks[taskIndex].reportTrajectories());
+
     if(taskIndex == tasks.length-1){// this is the last tasks
       $(".tasks-done").toggle();
       $(".tasks").toggle();
     }else{
       $(".task-number").text(taskIndex+2);
     }
-
   }
-
-
-
-
   var CanvasDrawr = function(options) {
     var canvas = document.getElementById(options.id),
         ctxt = canvas.getContext("2d");
@@ -243,7 +251,7 @@ $(function() {
                   self.clearTimeout();
                   var timeout = setTimeout(function(){
                     self.endTask(now);
-                  }, 2000);
+                  }, TOUCH_MOVE_TIMEOUT);
                   timeoutHandle.push(timeout);
               });
             }
@@ -331,7 +339,7 @@ $(function() {
       $(".tasks-done").toggle();
       $(".tasks").toggle();
     }
-    else{ // wait for the user to save ata
+    else{ // wait for the user to save data
       return;
     }
   });
@@ -344,6 +352,9 @@ $(function() {
       $("#path-draw-toggle-status").text("(False)");
     }
   });
+
+  $("#countdown-input").text(DEFAULT_COUNTDOWN);
+
   $("#countdown-increase").click(function(event){
     DEFAULT_COUNTDOWN++;
     $("#countdown-input").text(DEFAULT_COUNTDOWN);
@@ -367,8 +378,6 @@ $(function() {
     $("#tab-setting").show();
     $("#tab-main").hide();
     $("#tab-data").hide();
-
-
   });
 
   $("#tab-data-button").click(function(){
@@ -380,5 +389,24 @@ $(function() {
   $("#tab-data").hide();
   $("#tab-setting").hide();
 
-
+  // task_set
+  for (var i=0; i < exp_sets.length; i++){
+    $("#taskset-dropdown-ul").append('<li id="exp_'+i+'"><a href="#" value = '+i+'>Experiment '+(i+1)+'</a></li>');
+    $("#exp_"+i).click(function(event){
+      if(confirm("Do you want to start over this experiment?")){
+        var task_set_index = parseInt(event.target.getAttribute("value"));
+        $("#seleted-task").text(event.target.innerText);
+        $(".tasks-done").show();
+        $(".tasks").hide();
+        tasks = exp_sets[task_set_index];
+        $(".total-task-number").text(tasks.length);
+        taskIndex = -1;
+        $(".task-number").text(taskIndex+2);
+        console.log("Experiment changed to " + task_set_index);
+        $("#tab-main").show();
+        $("#tab-setting").hide();
+        $("#tab-data").hide();
+      }
+    });
+  }
 });

@@ -1,4 +1,4 @@
-var DEFAULT_RADIUS = 50;
+
 var DEBUG = false;
 
 var Point = function(x,y){
@@ -131,8 +131,8 @@ Task.prototype = {
     for (var i=0; i< this.touch_id.length; i++){
       for (var j=0; j< this.traceData[this.touch_id[i]].length; j++){
         string += this.name + ",";
-        string += this.touch_id[i] + ",";
-        string += this.traceData[this.touch_id[i]][j].time + ",";
+        string += i + ",";
+        string += (this.traceData[this.touch_id[i]][j].time-this.traceData[this.touch_id[i]][0].time) + ",";
         string += this.traceData[this.touch_id[i]][j].x + ",";
         string += this.traceData[this.touch_id[i]][j].y + ",";
         string += this.traceData[this.touch_id[i]][j].type + "\n";
@@ -152,28 +152,27 @@ Task.prototype = {
       for (var j=0; j< this.trajectories.length; j++){
         var distance = this.trajectories[j].startingPoint.distXY(this.traceData[this.touch_id[i]][0].x, this.traceData[this.touch_id[i]][0].y);
         distance += this.trajectories[j].endingPoint.distXY(this.traceData[this.touch_id[i]][lastIndex].x,   this.traceData[this.touch_id[i]][lastIndex].y);
-        if(minDist >distance ){
+        if(minDist>distance ){
           selectedTrajectoryIndex = j;
           minDist = distance;
         }
       }
       // found trajectory :
-
       if(selectedTrajectoryIndex == -1){
         if(DEBUG) alert("selectedTrajectoryIndex == -1");
         return;
       }
       var dist = this.trajectories[selectedTrajectoryIndex].startingPoint.distXY(this.traceData[this.touch_id[i]][0].x, this.traceData[this.touch_id[i]][0].y);
-// task starint point
+      // task starint point
       // touch starting point
       string += this.name + ",";
       string += "touch-start" + ",";
       string += this.traceData[this.touch_id[i]][0].time + ",";
       string += this.traceData[this.touch_id[i]][0].x + ",";
       string += this.traceData[this.touch_id[i]][0].y + ",";
-      string += this.trajectories[selectedTrajectoryIndex].startingPoint.x + ",";
-      string += this.trajectories[selectedTrajectoryIndex].startingPoint.y + ",";
-      string += dist + ",";
+      string += parseFloat(this.trajectories[selectedTrajectoryIndex].startingPoint.x).toPrecision(4) + ",";
+      string += parseFloat(this.trajectories[selectedTrajectoryIndex].startingPoint.y).toPrecision(4) + ",";
+      string += parseFloat(dist).toPrecision(4) + ",";
       string += (dist < this.trajectories[selectedTrajectoryIndex].radius) + "\n";
       // touch ending point
       dist = this.trajectories[selectedTrajectoryIndex].endingPoint.distXY(this.traceData[this.touch_id[i]][lastIndex].x, this.traceData[this.touch_id[i]][lastIndex].y);
@@ -182,9 +181,9 @@ Task.prototype = {
       string += this.traceData[this.touch_id[i]][lastIndex].time + ",";
       string += this.traceData[this.touch_id[i]][lastIndex].x + ",";
       string += this.traceData[this.touch_id[i]][lastIndex].y + ",";
-      string += this.trajectories[selectedTrajectoryIndex].endingPoint.x + ",";
-      string += this.trajectories[selectedTrajectoryIndex].endingPoint.y + ",";
-      string += dist + ",";
+      string += parseFloat(this.trajectories[selectedTrajectoryIndex].endingPoint.x).toPrecision(4) + ",";
+      string += parseFloat(this.trajectories[selectedTrajectoryIndex].endingPoint.y).toPrecision(4) + ",";
+      string += parseFloat(dist).toPrecision(4) + ",";
       string += (dist < this.trajectories[selectedTrajectoryIndex].radius) + "\n";
     }
     string += this.name + ",";

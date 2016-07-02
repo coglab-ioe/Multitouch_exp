@@ -148,7 +148,3 @@ OscillatorSample.prototype.changeDetune = function(val) {
 OscillatorSample.prototype.changeType = function(type) {
   this.oscillator.type = type;
 };
-
-
-var osc = new OscillatorSample();
-osc.play();
