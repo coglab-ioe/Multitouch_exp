@@ -8,7 +8,11 @@ var DEBUG = true;
 var draw_path = true;
 var path_color = "black";
 var timeoutHandle = [];
-var audioplay= false
+var audioplay= false;
+
+var numTaskLeft = 0, taskStarted = false;
+
+
 if(exp_sets && exp_sets.length>0){
   // nothing to do actually.
 }else{
@@ -131,7 +135,6 @@ $(function() {
     var lines = [, , ];
     var offset = $(canvas).offset();
     var pressed = false;
-    var numTaskLeft = 0, taskStarted = false;
     var clickid = 0;
     var self = {
         init: function() {
