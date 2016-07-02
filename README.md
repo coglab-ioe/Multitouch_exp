@@ -20,13 +20,13 @@
 ## TODO
    * point specification by percentage (relative ratio)
    * two textareas --> one textarea
-   * timeout 2s --> 0.5s
-   * distance --> round up at the 4th floating points
+   * ~~timeout 2s --> 0.5s~~
+   * ~~distance --> round up at the 4th floating points~~
    * Date Time or Name input for distinction.
-   * touchid to index (0,1,2...) 
+   * ~~touchid to index (0,1,2...)~~
    * audio 
-   * time data to relative time. 
-   * task_sets 
+   * ~~time data to relative time.~~ 
+   * ~~task_sets~~ 
    * easy way to share(copy/paste data) 
 
 ## left
