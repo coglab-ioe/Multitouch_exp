@@ -107,7 +107,7 @@
                     Detune: <input id="detune" type="range" min="-100" max="100" step="5" value="0"
                     onchange="sample.changeDetune(this.value);">
                     </div>
-
+                    <br>
                     <div>
                       <input type="radio" name="ir" value="0" class="effect" checked
                       onclick="sample.changeType('sine')">Sine</input>
@@ -124,8 +124,11 @@
                       <input type="radio" name="ir" value="3" class="effect"
                       onclick="sample.changeType('triangle')">Triangle</input>
                     </div>
+                    <br>
+                    <div>
+                      <button class = "btn btn-primary" onclick="sample.toggle()">Play/pause</button></p>
+                    </div>
 
-                    <p><button class = "btn btn-primary" onclick="sample.toggle()">Play/pause</button></p>
                     <script>
                     var sample = new OscillatorSample();
                     </script>

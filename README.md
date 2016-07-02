@@ -24,10 +24,10 @@
    * ~~distance --> round up at the 4th floating points~~
    * Date Time or Name input for distinction.
    * ~~touchid to index (0,1,2...)~~
-   * audio 
-   * ~~time data to relative time.~~ 
-   * ~~task_sets~~ 
-   * easy way to share(copy/paste data) 
+   * audio
+   * ~~time data to relative time.~~
+   * ~~task_sets~~
+   * easy way to share(copy/paste data)
 
 ## left
   * Audio
@@ -68,3 +68,5 @@
 - Checking in 6/25/2016 11:29PM
 
 - Checking in 7/1/2016 9:20PM
+  - 1.9 hours, total: 20.3 hours
+- Checking out 7/1/2016 11:12PM
