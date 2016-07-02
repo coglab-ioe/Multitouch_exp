@@ -16,6 +16,8 @@ if(exp_sets && exp_sets.length>0){
 
 var tasks = exp_sets[0];
 
+sample = new OscillatorSample();
+
 var colors = [
   {
     fill: "#009900",
@@ -96,6 +98,8 @@ $(function() {
   };
 
   var endTask = function(){
+    sample.stop();
+
     $(".layer-wrapper").show();
 
     //$("#final-trace-outcome").val($("#final-trace-outcome").val()+ TRACE_REPORT_START);
@@ -144,6 +148,7 @@ $(function() {
           if ( numTaskLeft == 0){
             numTaskLeft = tasks[taskIndex].trajectories.length;
             taskStarted = true;
+            sample.play();
           }
           if(DEBUG) console.log("preTouch : numTaskLeft : " + numTaskLeft);
 
@@ -201,6 +206,7 @@ $(function() {
           if(numTaskLeft==0){
             self.clearTimeout();
             self.endTask(now);
+            sample.stop();
           }
           else if(numTaskLeft < 0){
             if(DEBUG) alert("numTaskLeft < 0: deal with the boundary cases. ")
