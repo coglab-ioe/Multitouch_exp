@@ -81,7 +81,7 @@ $(function() {
     $(".tasks").toggle();
     $("#countdown-number").text(DEFAULT_COUNTDOWN);
     countdown = DEFAULT_COUNTDOWN;
-    var nextTa
+    numTaskLeft = 0;
     if ( DEFAULT_COUNTDOWN == 0){
       nextTask();
     }
