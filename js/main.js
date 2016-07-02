@@ -65,7 +65,7 @@ $(function() {
   var nextTask = function(){
     taskIndex++;
     if(taskIndex >= tasks.length){
-      alert("ERROR: this should not happen");
+      alert("ERROR: this should not happen ("+taskIndex+"/"+tasks.length+")");
     }
     $(".layer-wrapper").hide();
     firstTrial = false;
@@ -95,8 +95,8 @@ $(function() {
         $("#countdown-number").text(countdown);
         if (countdown > 0)
           return;
-        nextTask();
         clearInterval(countdownHandle);
+        nextTask();
 
       },1000);
     }
