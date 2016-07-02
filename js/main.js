@@ -8,6 +8,7 @@ var DEBUG = true;
 var draw_path = true;
 var path_color = "black";
 var timeoutHandle = [];
+var audioplay= false
 if(exp_sets && exp_sets.length>0){
   // nothing to do actually.
 }else{
@@ -98,7 +99,10 @@ $(function() {
   };
 
   var endTask = function(){
-    sample.stop();
+    if(audioplay){
+      sample.stop();
+      audioplay = false;
+    }
 
     $(".layer-wrapper").show();
 
@@ -149,6 +153,7 @@ $(function() {
             numTaskLeft = tasks[taskIndex].trajectories.length;
             taskStarted = true;
             sample.play();
+            audioplay = true;
           }
           if(DEBUG) console.log("preTouch : numTaskLeft : " + numTaskLeft);
 
@@ -206,7 +211,11 @@ $(function() {
           if(numTaskLeft==0){
             self.clearTimeout();
             self.endTask(now);
-            sample.stop();
+            if(audioplay){
+              sample.stop();
+              audioplay = false;
+            }
+
           }
           else if(numTaskLeft < 0){
             if(DEBUG) alert("numTaskLeft < 0: deal with the boundary cases. ")
