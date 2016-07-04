@@ -6,6 +6,7 @@ var firstTrial = true;
 var tasks_results = [];
 var DEBUG = true;
 var draw_path = true;
+var audio_feedback = true;
 var path_color = "black";
 var timeoutHandle = [];
 var audioplay= false;
@@ -111,7 +112,7 @@ $(function() {
   };
 
   var endTask = function(){
-    if(audioplay){
+    if(audioplay && audio_feedback){
       tune.stop();
       audioplay = false;
     }
@@ -163,11 +164,14 @@ $(function() {
           if ( numTaskLeft == 0){
             numTaskLeft = tasks[taskIndex].trajectories.length;
             taskStarted = true;
-            tune.play();
-            audioplay = true;
-            tune.changeDetune(tune_detune);
-            tune.changeFrequency(tune_frequency);
-            tune.changeType(tune_type);
+            if (audio_feedback){
+              tune.play();
+              audioplay = true;
+              tune.changeDetune(tune_detune);
+              tune.changeFrequency(tune_frequency);
+              tune.changeType(tune_type);
+            }
+
           }
           if(DEBUG) console.log("preTouch : numTaskLeft : " + numTaskLeft);
 
@@ -225,7 +229,7 @@ $(function() {
           if(numTaskLeft==0){
             self.clearTimeout();
             self.endTask(now);
-            if(audioplay){
+            if(audioplay && audio_feedback){
               tune.stop();
               audioplay = false;
             }
@@ -371,6 +375,14 @@ $(function() {
     }
   });
 
+  $("#audio-toggle").click(function(event){
+    audio_feedback = !audio_feedback;
+    if(audio_feedback){
+      $("#audio-toggle-status").text("(True)");
+    }else{
+      $("#audio-toggle-status").text("(False)");
+    }
+  });
   $("#path-draw-toggle").click(function(event){
     draw_path = !draw_path;
     if(draw_path){

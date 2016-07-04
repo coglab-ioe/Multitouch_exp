@@ -100,12 +100,21 @@
                     </h4>
                   </div>
                   <div class="post">
-                    <h4>Oscillator</h4>
-
+                    <div><h4>Audio Feedback</h4>  </div>
+                    <div id = "audio-toggle" class="btn-group" data-toggle="buttons">
+                      <label class="btn btn-primary active">
+                        <input type="checkbox" checked autocomplete="off">
+                        <span id = "audio-toggle-status">(True)</span>
+                      </label>
+                    </div>
                     <div>
-                    Frequency: <input id="frequency" type="range" min="0" max="1000"
-                    step="1" value="440">
-                    Detune: <input id="detune" type="range" min="-100" max="100" step="5" value="0">
+                      <div><h4>Audio parameters</h4>  </div>
+                      <div>
+
+                        Frequency: <input id="frequency" type="range" min="0" max="1000"
+                        step="1" value="440">
+                        Detune: <input id="detune" type="range" min="-100" max="100" step="5" value="0">
+                      </div>
                     </div>
                     <br>
                     <div>

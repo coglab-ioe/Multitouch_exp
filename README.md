@@ -18,16 +18,16 @@
   *
 
 ## TODO
-   * point specification by percentage (relative ratio)
-   * two textareas --> one textarea
+   * - NOT needed - point specification by percentage (relative ratio)  
+   * ~~two textareas --> one textarea~~
    * ~~timeout 2s --> 0.5s~~
    * ~~distance --> round up at the 4th floating points~~
-   * Date Time or Name input for distinction.
+   * ~~Date Time or Name input for distinction.~~
    * ~~touchid to index (0,1,2...)~~
    * ~~audio~~
    * ~~time data to relative time.~~
    * ~~task_sets~~
-   * easy way to share(copy/paste data)
+   * ~~easy way to share(copy/paste data)~~
 
 ## left
   * Audio
@@ -72,3 +72,5 @@
 - Checking out 7/2/2016 12:00AM
 
 - Checking in 7/4/2016 12:22AM
+  - 1.5 hours total : 22.6 hours
+- Checking out 7/2/2016 1:51AM
