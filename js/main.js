@@ -21,7 +21,12 @@ if(exp_sets && exp_sets.length>0){
 
 var tasks = exp_sets[0];
 
-sample = new OscillatorSample();
+tune = new OscillatorSample();
+tune_play = false;
+tune_frequency = 440;
+tune_detune = 0;
+tune_type = 'sine';
+
 
 var colors = [
   {
@@ -68,6 +73,9 @@ $(function() {
       alert("ERROR: this should not happen ("+taskIndex+"/"+tasks.length+")");
     }
     $(".layer-wrapper").hide();
+    if(firstTrial){
+      $("#final-outcome").val(new Date().toString() + "\n\n");
+    }
     firstTrial = false;
     var task = tasks[taskIndex];
     if(task.trajectories.length > colors.length){
@@ -104,16 +112,16 @@ $(function() {
 
   var endTask = function(){
     if(audioplay){
-      sample.stop();
+      tune.stop();
       audioplay = false;
     }
 
     $(".layer-wrapper").show();
 
-    //$("#final-trace-outcome").val($("#final-trace-outcome").val()+ TRACE_REPORT_START);
-    $("#final-trace-outcome").val($("#final-trace-outcome").val()+ tasks[taskIndex].reportTraces());
-    //$("#final-task-outcome").val($("#final-task-outcome").val()+ TASK_REPORT_START);
-    $("#final-task-outcome").val($("#final-task-outcome").val()+ tasks[taskIndex].reportTrajectories());
+    $("#final-outcome").val($("#final-outcome").val()+ TRACE_REPORT_START);
+    $("#final-outcome").val($("#final-outcome").val()+ tasks[taskIndex].reportTraces());
+    $("#final-outcome").val($("#final-outcome").val()+ TASK_REPORT_START);
+    $("#final-outcome").val($("#final-outcome").val()+ tasks[taskIndex].reportTrajectories());
 
     if(taskIndex == tasks.length-1){// this is the last tasks
       $(".tasks-done").toggle();
@@ -155,8 +163,11 @@ $(function() {
           if ( numTaskLeft == 0){
             numTaskLeft = tasks[taskIndex].trajectories.length;
             taskStarted = true;
-            sample.play();
+            tune.play();
             audioplay = true;
+            tune.changeDetune(tune_detune);
+            tune.changeFrequency(tune_frequency);
+            tune.changeType(tune_type);
           }
           if(DEBUG) console.log("preTouch : numTaskLeft : " + numTaskLeft);
 
@@ -215,7 +226,7 @@ $(function() {
             self.clearTimeout();
             self.endTask(now);
             if(audioplay){
-              sample.stop();
+              tune.stop();
               audioplay = false;
             }
 
@@ -340,9 +351,7 @@ $(function() {
       color: '#000000',
       container: true,
       inline: true
-  })
-
-  .on("changeColor", function(e){
+  }).on("changeColor", function(e){
     path_color = e.color.toHex();
     console.log("color change - :" +path_color )
   })
@@ -352,10 +361,10 @@ $(function() {
     if( firstTrial || confirm("Did you save data? Textareas will be initialized.")){
       taskIndex = -1;
       $(".task-number").text(taskIndex+2);
-      $("#final-trace-outcome").val("");
-      $("#final-task-outcome").val("");
+      $("#final-outcome").val(new Date().toString() + "\n\n");
       $(".tasks-done").toggle();
       $(".tasks").toggle();
+
     }
     else{ // wait for the user to save data
       return;
@@ -390,6 +399,10 @@ $(function() {
     $("#tab-main").show();
     $("#tab-setting").hide();
     $("#tab-data").hide();
+    if(tune_play){
+      tune.toggle();
+      tune_play = !tune_play;
+    }
   });
 
   $("#tab-setting-button").click(function(){
@@ -402,10 +415,49 @@ $(function() {
     $("#tab-data").show();
     $("#tab-setting").hide();
     $("#tab-main").hide();
+    if(tune_play){
+      tune.toggle();
+      tune_play = !tune_play;
+    }
+  });
+
+  $(".sound-toggle").click(function(){
+    tune.toggle();
+    tune_play = !tune_play;
+    if(tune_play){
+      tune.changeFrequency(tune_frequency);
+      tune.changeDetune(tune_detune);
+      tune.changeType(tune_type);
+    }
+  });
+
+  new Clipboard('.clipboard-btn');
+
+  $("#frequency").on("change", function(event){
+
+    tune_frequency = this.value;
+    if(tune_play){
+      tune.changeFrequency(this.value);
+    }
+  });
+
+  $("#detune").on("change", function(event){
+    tune_detune = this.value;
+    if(tune_play){
+      tune.changeDetune(this.value);
+    }
+  });
+
+  $('input[type=radio][name=ir]').change(function() {
+      tune_type = this.value;
+      if(tune_play){
+        tune.changeType(tune_type);
+      }
   });
 
   $("#tab-data").hide();
   $("#tab-setting").hide();
+
 
   // task_set
   for (var i=0; i < exp_sets.length; i++){

@@ -6,7 +6,7 @@ canvas{
 }
 
 textarea {  /* position is inherited */
-    width: 45%;
+    width: 80%;
     height : 500px;
     padding: 2px;
     resize : none;

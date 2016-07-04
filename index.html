@@ -23,7 +23,9 @@
   <!-- color picker-->
   <link href="js/library/colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
   <script src="js/library/colorpicker/js/bootstrap-colorpicker.js"></script>
-  <script src="js/library/colorpicker/js/bootstrap-colorpicker.js"></script>
+  <script src="js/library/clipboard/clipboard.min.js"></script>
+
+
   <script src="task/task.js"></script>
   <script src="task/tasks.js"></script>
   <script src="js/audio.js"></script>
@@ -102,31 +104,25 @@
 
                     <div>
                     Frequency: <input id="frequency" type="range" min="0" max="1000"
-                    step="1" value="440"
-                    onchange="sample.changeFrequency(this.value);">
-                    Detune: <input id="detune" type="range" min="-100" max="100" step="5" value="0"
-                    onchange="sample.changeDetune(this.value);">
+                    step="1" value="440">
+                    Detune: <input id="detune" type="range" min="-100" max="100" step="5" value="0">
                     </div>
                     <br>
                     <div>
-                      <input type="radio" name="ir" value="0" class="effect" checked
-                      onclick="sample.changeType('sine')">Sine</input>
+                      <input type="radio" name="ir" value="sine" class="effect" checked>Sine</input>
                     </div>
                     <div>
-                      <input type="radio" name="ir" value="1" class="effect"
-                      onclick="sample.changeType('square')">Square</input>
+                      <input type="radio" name="ir" value="square" class="effect">Square</input>
                     </div>
                     <div>
-                      <input type="radio" name="ir" value="2" class="effect"
-                      onclick="sample.changeType('sawtooth')">Sawtooth</input>
+                      <input type="radio" name="ir" value="sawtooth" class="effect">Sawtooth</input>
                     </div>
                     <div>
-                      <input type="radio" name="ir" value="3" class="effect"
-                      onclick="sample.changeType('triangle')">Triangle</input>
+                      <input type="radio" name="ir" value="triangle" class="effect">Triangle</input>
                     </div>
                     <br>
                     <div>
-                      <button class = "btn btn-primary" onclick="sample.toggle()">Play/pause</button></p>
+                      <button class = "btn btn-primary sound-toggle">Play/pause</button></p>
                     </div>
                   </div>
                 </div>
@@ -154,10 +150,19 @@
         </div>
       </div>
       <div class="tab-pane tab-wrapper" id="tab-data">
+
         <div class="export-textarea">
           <br><br>
-            <textarea id = "final-trace-outcome"></textarea>
-          <textarea id = "final-task-outcome"></textarea>
+          <textarea id = "final-outcome"></textarea>
+        </div>
+        <div>
+  <!-- Trigger -->
+          <button class="btn-lg btn btn-success clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#final-outcome">
+              Copy to clipboard
+          </button>
+          <a href="mailto:" class="btn-lg btn btn-info">
+              Launch Email
+          </a>
         </div>
       </div>
     </div>
