@@ -1,6 +1,6 @@
 //////////////// Task 1_ : one-touch (outside)
 canvas_span = 1.0; // 1.0 means the canvas being 100% width
-DEFAULT_RADIUS = 50;
+DEFAULT_RADIUS = 20;
 DEFAULT_COUNTDOWN = 3;
 TOUCH_MOVE_TIMEOUT = 200;
 
@@ -133,7 +133,7 @@ var task3_4 = new Task("two-touch (spread) in 135 degree", [trajectory3_4_1, tra
 // Task 4_1: one-touch (inside) in 0 degree
 var startingPoint4_1 = new Point(500+200,300);
 var endingPoint4_1 = new Point(500+30,300);
-var trajectory4_1 = new Trajectory(startingPoint4_1,endingPoint4_1,100);
+var trajectory4_1 = new Trajectory(startingPoint4_1,endingPoint4_1,20);
 var task4_1 = new Task("one-touch (inside) in 0 degree", [trajectory4_1]);
 
 // Task 4_2: one-touch (inside) in 45 degree
