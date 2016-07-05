@@ -374,6 +374,12 @@ $(function() {
       return;
     }
   });
+  
+  if(audio_feedback){
+    $("#audio-toggle-status").text("(True)");
+  }else{
+    $("#audio-toggle-status").text("(False)");
+  }
 
   $("#audio-toggle").click(function(event){
     audio_feedback = !audio_feedback;
