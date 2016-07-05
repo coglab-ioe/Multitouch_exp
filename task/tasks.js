@@ -1,7 +1,7 @@
 //////////////// Task 1_ : one-touch (outside)
 canvas_span = 1.0; // 1.0 means the canvas being 100% width
 DEFAULT_RADIUS = 20;
-DEFAULT_COUNTDOWN = 3;
+DEFAULT_COUNTDOWN = 0;
 TOUCH_MOVE_TIMEOUT = 200;
 
 // Task 1_1: one-touch (outside) in 0 degree
